@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
-import api from '../../servises/axios'
+import api from '../../servises/api/axios interceptor '
 
 
 
@@ -12,6 +12,14 @@ const OwnerLogin :React.FC = () => {
         email : "",
         password : ""
     })
+
+    useEffect(()=>{
+      let onwer = localStorage.getItem('owner')
+
+      if(onwer){
+        navigate('/ownerHome')
+      }
+    },[])
     
 
     const handleLoginOwner = (e:React.ChangeEvent<HTMLInputElement>) =>{
@@ -25,7 +33,16 @@ const OwnerLogin :React.FC = () => {
             const {data} = await api.post('/owner/ownerLogin',{...ownerLogin})
 
             if(data){
-                navigate('/ownerHome')
+              console.log(data);
+              const OwnerLoginCheck =data.ownerLoginCheck
+              const accessToken = data.accessToken
+              if(data.ownerLoginCheck.isblocked == true){
+                navigate('/login')
+              }else{
+
+                localStorage.setItem('owner',JSON.stringify(OwnerLoginCheck,accessToken))
+                  navigate('/ownerHome')
+              }
             }
         } catch (error) {
             
@@ -52,8 +69,9 @@ const OwnerLogin :React.FC = () => {
       <input  className="w-60 rounded-xl border-gray-300 border m-14 p-2 mt-9" type="text" name='password'   placeholder='password' onChange={handleLoginOwner} />
    </div>
    <div>
-   <button className="rounded-full ml-28 bg-cyan-300 py-3 px-3 ...">Save Changes</button>
+   <button className="rounded-full ml-36 bg-cyan-300 py-3 px-3 ...">submit</button>
    </div>
+   <p className='mt-7 text-center'>alredy have and account <span className='text-blue-400' onClick={()=>navigate('/Register')}>signup</span></p>
   </div>
   </form>
 </div>

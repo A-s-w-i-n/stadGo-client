@@ -21,8 +21,8 @@ function Login  ()  {
     }
   return (
     
-      <div>
-      <div className="flex  justify-center  mt-9 ">
+      <div >
+      <div className="flex  justify-center  mt-9   " >
         <h1 className="font-extrabold text-3xl">LOGIN</h1>
       </div>
 

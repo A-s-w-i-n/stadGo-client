@@ -10,7 +10,8 @@ const MainPagenav = (value : any) => {
     if(user){
       localStorage.removeItem("user")
       navigate('/login')
-    }else{
+    }
+     if(owner){
       localStorage.removeItem("owner")
 
       navigate('/login')

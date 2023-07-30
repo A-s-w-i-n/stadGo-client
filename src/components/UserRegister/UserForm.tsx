@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userAuth } from "../../domain/modals/user";
-import api from "../../servises/axios";
+import api from "../../servises/api/axios interceptor ";
 import jwt_Decode from "jwt-decode";
 import {
   GoogleOAuthProvider,
   GoogleLogin,
-  CredentialResponse,
   GoogleCredentialResponse,
 } from "@react-oauth/google";
 
@@ -28,7 +27,14 @@ const userForm: React.FC = () => {
     phone: "",
     
   });
-  const [Gdecode,setDecode] = useState<any> ("")
+  useEffect(()=>{
+    let user = localStorage.getItem('user')
+
+    if(user){
+      navigate('/userHome')
+    }
+  },[])
+
 
   const addUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -57,8 +63,14 @@ console.log(Guser);
 
          const { data } = await api.post("/userRegister", { ...Guser,isGoogle : true });
 
-      if (data.user) {
+      if (data) {
+        const  GaccessToken =data.sub
+        const GsignCheck =data.name
+
+        localStorage.setItem('user',JSON.stringify(GaccessToken,GsignCheck))
         navigate("/userHome");
+        console.log(data);
+        
       }
         
       } catch (error) {
@@ -67,16 +79,6 @@ console.log(Guser);
     }else{
     console.log(credentialResponse);
     }
-   
-  
-    
-    // try {
-      // const { data } = await api.post("/userRegister", { ...Guser });
-
-  //     if (data.user) {
-  //       navigate("/login");
-  //     }
-  //   } catch (error) {}
   };
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -95,7 +97,7 @@ console.log(Guser);
         console.log(user);
 
         const { data } = await api.post("/userRegister", { ...user });
-        console.log("data :", data);
+      
         if (data.user) {
           navigate("/login");
         }
@@ -174,9 +176,9 @@ console.log(Guser);
                       REGISTER
                     </button>
                     <h3 className="text-center my-2 h-100">or</h3>
-                    <button className="rounded-3xl bg-white border-y border-black px-2  h-11">
+                    <button className="rounded-3xl bg-white border-y border-black   h-7">
                     <GoogleOAuthProvider  clientId="369233122526-6jq1er61ihvpfenp7aosiovivct318d4.apps.googleusercontent.com" >
-                        <GoogleLogin
+                        <GoogleLogin size="medium" type="icon"
                           onSuccess={googleSignup}
                           onError={() => {
                             console.log("Login Failed");

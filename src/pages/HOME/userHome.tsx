@@ -3,7 +3,18 @@ import MainPagenav from '../navbar/mainPagenav'
 import { useNavigate } from 'react-router-dom'
 
 const UserHome = () => {
+  const navigate = useNavigate()
+
   
+  useEffect(()=>{
+  const user =  localStorage.getItem("user")
+      if(user){
+
+        navigate('/userHome')
+      }else if(!user){
+        navigate('/login')
+    }
+  },[])
 
 
   return (

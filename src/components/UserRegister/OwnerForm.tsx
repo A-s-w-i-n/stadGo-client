@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { ownerAuth } from '../../domain/modals/owner'
 import { useNavigate } from 'react-router-dom'
-import api from '../../servises/axios'
+import api from '../../servises/api/axios interceptor '
 
 const OwnerForm :React.FC =()=> {
   const navigate = useNavigate()

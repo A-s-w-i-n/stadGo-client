@@ -1,5 +1,5 @@
-import React,{useState} from 'react'
-import api from '../../servises/axios'
+import React,{useEffect, useState} from 'react'
+import api from '../../servises/api/axios interceptor '
 import { useNavigate } from 'react-router-dom'
 
 
@@ -14,6 +14,14 @@ const AdminLogin : React.FC = () => {
         password : ""
     })
 
+    useEffect(()=>{
+        let admin = localStorage.getItem('admin')
+
+        if(admin ){
+            navigate('/adminhome')
+        }
+    },[])
+
     const handleLoginAdmin = (e:React.ChangeEvent<HTMLInputElement>)=>{
         setAdminLogin({...adminLogin,[e.target.name]:e.target.value})
 
@@ -24,10 +32,16 @@ const AdminLogin : React.FC = () => {
         
         try {
             const {data} = await api.post('/admin/adminLogin',{...adminLogin})
-     
-
-            if(data) { 
-                navigate('/adminhome')
+            if(data){
+                console.log(data);
+                const adminToken = data.accessToken
+                const admindata = data.adminLoginCheck 
+                
+                
+                localStorage.setItem('admin',JSON.stringify(adminToken,admindata))
+                if(data) { 
+                    navigate('/adminhome')
+                }
             }
         } catch (error) {
             console.log(error)
