@@ -12,6 +12,7 @@ import './App.css'
 import AdminHome from './pages/home/adminHome';
 import AdminFetchUser from './pages/adminMangement/adminFetchUser';
 import AdminFetchOwner from './pages/adminMangement/AdminFetchOwner';
+import OrgDetail from './components/OrgDetails/orgDetail';
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
         <Route path='/admin/fetchUser' element={<AdminFetchUser/>}/>
         <Route path='/admin/fetchOwner' element ={<AdminFetchOwner/>}/>
         <Route path='/Login' element={<Login/>}/>
+        <Route path='/ordDetail' element={<OrgDetail/>}/>
         
 
 

@@ -121,7 +121,7 @@ const handleLoginUser = (e:React.ChangeEvent<HTMLInputElement>) =>{
      </div>
      <div className='items-center justify-center'>
      <button  className="rounded-full ml-36 bg-cyan-300 py-3 px-3">submit</button>
-     <h3 className="text-center my-2 h-100">or</h3>
+     <h3 className="text-center my-2 ">or</h3>
      <div className="flex justify-center items-center ">
   <button className="rounded-3xl bg-white border-y border-black h-2">
     <GoogleOAuthProvider clientId="369233122526-6jq1er61ihvpfenp7aosiovivct318d4.apps.googleusercontent.com">

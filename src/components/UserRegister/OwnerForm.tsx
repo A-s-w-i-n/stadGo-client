@@ -113,11 +113,11 @@ const OwnerForm :React.FC =()=> {
             </div>
             <div className="grid grid-cols-2 gap-4 mt-6 ml-48">
               <div className="flex flex-col items-center justify-center">
-                <button className="rounded-full bg-cyan-300 px-3 py-2 h-100 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 duration-300">
+                <button className="rounded-full bg-cyan-300 px-3 py-2  transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 duration-300">
                   REGISTER
                 </button>
-                <h3 className="text-center my-2 h-100">or</h3>
-                <button className="rounded-full bg-white border-y border-black px-3 py-2 h-100">
+                <h3 className="text-center my-2">or</h3>
+                <button className="rounded-full bg-white border-y border-black px-3 py-2 ">
                   <img
                     className="object-contain h-5"
                     src="https://o.remove.bg/downloads/c9d9aaa8-da55-430f-a432-e68618e1af40/download-removebg-preview.png"

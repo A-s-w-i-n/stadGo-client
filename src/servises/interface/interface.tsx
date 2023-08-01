@@ -10,3 +10,9 @@ export interface userData {
      ownername : string,
      isblocked : boolean
    }
+
+   export interface confirmation{
+    isOpen : boolean,
+    onCancel : ()=>void
+    onConfirm : ()=> void
+   }

@@ -105,10 +105,11 @@ console.log(Guser);
     } catch (error) {}
   };
   return (
-    <div className="fixed">
+    
+    <div className="fixed bg-customcolor"   >
       <form action="" onSubmit={handleSignup}>
-        <div className="relative h-screen flex mt-8">
-          <div className="left w-1/2 h-screen bg-white">
+        <div className="relative h-screen flex mt-8 bg-blue-500">
+          <div className="left w-1/2 h-screen bg-blue-300">
             <div className="absolute top-56 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <div className="center shadow-2xl bg-white rounded-xl w-max h-4/5 gap-y-px">
                 <div className="text-center pt-3">REGISTER HERE</div>
@@ -170,12 +171,12 @@ console.log(Guser);
                 onChange={addUser}
               /> */}
                 </div>
-                <div className="grid grid-cols-2 gap-4 mt-6 ml-48">
+                <div className="grid grid-cols-2 gap-4 mt-6 ml-48 ">
                   <div className="flex flex-col items-center justify-center">
-                    <button className="rounded-full bg-cyan-300 px-3 py-2 h-100 transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 duration-300">
+                    <button className="rounded-3xl bg-cyan-300 px-3 py-2  transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 duration-300">
                       REGISTER
                     </button>
-                    <h3 className="text-center my-2 h-100">or</h3>
+                    <h3 className="text-center my-2 ">or</h3>
                     <button className="rounded-3xl bg-white border-y border-black   h-7">
                     <GoogleOAuthProvider  clientId="369233122526-6jq1er61ihvpfenp7aosiovivct318d4.apps.googleusercontent.com" >
                         <GoogleLogin size="medium" type="icon"

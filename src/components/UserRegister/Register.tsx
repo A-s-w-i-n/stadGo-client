@@ -1,13 +1,12 @@
 
-import "./userRegister.css";
-import { useState } from "react";
+
+import { useState,useEffect } from "react";
 import UserForm from "./UserForm";
 import OwnerForm from "./OwnerForm";
-import { useNavigate } from "react-router-dom";
+import './costomColor.css'
 
 
 function Register() {
-  const navigate = useNavigate()
   const [showOwner, setShowOwner] = useState(false);
   const [showUser, setShowUser] = useState(true);
 
@@ -20,9 +19,16 @@ function Register() {
     setShowUser(false);
     
   };
+  useEffect(()=>{
+    document.body.classList.add("custom-body-color");
+
+    return () => {
+      document.body.classList.remove("custom-body-color");
+    };
+  },[])
   return (
-    <div>
-      <div className="flex  justify-center  mt-3 mb-6">
+    <div className="">
+      <div className="flex  justify-center  mt-3 mb-6 ">
         <h1 className="font-extrabold text-3xl">Register Now</h1>
       </div>
 
@@ -44,7 +50,7 @@ function Register() {
           OWNER
         </button>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center bg-orange-700">
         {showUser && <UserForm />}
         {showOwner && <OwnerForm />}
       </div>

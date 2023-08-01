@@ -1,6 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import UserLogin from './userLogin'
 import OwnerLogin from './ownerLogin'
+import '../UserRegister/costomColor.css'
 
 
 
@@ -9,7 +10,13 @@ function Login  ()  {
     const [userLogin,showUserLogin] = useState(true)
     const [ownerLogin,showOwnerLogin] = useState(false)
 
-
+    useEffect(()=>{
+      document.body.classList.add("custom-body-color");
+  
+      return () => {
+        document.body.classList.remove("custom-body-color");
+      };
+    },[])
 
     const handleshowuser = ()=>{
         showUserLogin(true)

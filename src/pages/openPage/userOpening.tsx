@@ -1,6 +1,7 @@
 import React from 'react'
-import MainPagenav from '../navbar/mainPagenav'
+// import MainPagenav from '../navbar/mainPagenav'
 import {useNavigate} from "react-router-dom";
+import Navdesign from '../navbar/navdesign';
 
 const UserOpening = () => {
     const navigate = useNavigate()
@@ -11,7 +12,7 @@ const UserOpening = () => {
   return (
     <div>
         <div>
-        <MainPagenav/>
+        <Navdesign/>
         </div>
       <div className='h-screen flex  justify-center'>
       <div className='w-1/2 h-screen flex ml-10 text-5xl items-center'>

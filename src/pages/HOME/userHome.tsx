@@ -1,6 +1,6 @@
 import React ,{useEffect}from 'react'
-import MainPagenav from '../navbar/mainPagenav'
 import { useNavigate } from 'react-router-dom'
+import Navdesign from '../navbar/navdesign'
 
 const UserHome = () => {
   const navigate = useNavigate()
@@ -21,7 +21,8 @@ const UserHome = () => {
     <div>
        <div>
         <div>
-        <MainPagenav />
+        
+        <Navdesign />
         </div>
       <div className='h-screen flex  justify-center'>
 
