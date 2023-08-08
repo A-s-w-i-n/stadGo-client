@@ -1,8 +1,8 @@
 
 
 import { useState,useEffect } from "react";
-import UserForm from "./UserForm";
-import OwnerForm from "./OwnerForm";
+import UserForm from "../user/UserForm";
+import OwnerForm from "../owner/OwnerForm";
 import './costomColor.css'
 
 

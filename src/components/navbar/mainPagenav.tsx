@@ -20,7 +20,7 @@ const MainPagenav = (value : any) => {
   return (
     <div>
     <div>
-      <div className='fixed bg-gradient-to-r from-white bg-cyan-400 from-50%  w-full h-16 flex items-center'>
+      <div className='fixed bg-gradient-to-r from-white w-full h-16 flex items-center'>
         <img className='w-28 ml-5' src="/public/mainImages/STADGO-logos_black.png" alt="" />
         <button onClick={handleLogout} className='ml-auto mr-5 rounded-xl py-2 px-3 bg-cyan-300'>
           Logout

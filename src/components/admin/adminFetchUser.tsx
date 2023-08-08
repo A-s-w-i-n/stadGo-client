@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../../servises/api/axios interceptor ";
-import AdminHome from "../home/adminHome";
-import { userData } from "../../servises/interface/interface";
+import AdminHome from "./adminHome";
+import { userData } from "../../domain/modals/userData";
 
 
 const AdminFetchUser: React.FC = () => {
@@ -15,8 +15,7 @@ const AdminFetchUser: React.FC = () => {
     id: string
   ) => {
     e.preventDefault();
-
-
+    
     try {
       const userBlock = await api.post("/admin/blockUser", { id });
 

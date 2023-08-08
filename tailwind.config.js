@@ -6,12 +6,15 @@ export default {
     extend: {
       spacing :{
         "100" :"30rem"
-      },boxShadow: {
+      },
+      boxShadow: {
         '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
       },
       colors :{
         "customcolor" : "f0f0f0"
-      }
+      },
+    
+
     },
   },
   plugins: [],

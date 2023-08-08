@@ -11,6 +11,7 @@ const api : AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    
     return config;
   },
   (error: AxiosError) => {

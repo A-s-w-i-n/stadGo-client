@@ -13,13 +13,13 @@ const OwnerLogin :React.FC = () => {
         password : ""
     })
 
-    useEffect(()=>{
-      let onwer = localStorage.getItem('owner')
+    // useEffect(()=>{
+    //   let onwer = localStorage.getItem('owner')
 
-      if(onwer){
-        navigate('/ownerHome')
-      }
-    },[])
+    //   if(onwer){
+    //     navigate('/ownerHome')
+    //   }
+    // },[])
     
 
     const handleLoginOwner = (e:React.ChangeEvent<HTMLInputElement>) =>{
@@ -35,12 +35,11 @@ const OwnerLogin :React.FC = () => {
             if(data){
               console.log(data);
               const OwnerLoginCheck =data.ownerLoginCheck
-              const accessToken = data.accessToken
               if(data.ownerLoginCheck.isblocked == true){
                 navigate('/login')
               }else{
 
-                localStorage.setItem('owner',JSON.stringify(OwnerLoginCheck,accessToken))
+                localStorage.setItem('owner',JSON.stringify(OwnerLoginCheck))
                   navigate('/ownerHome')
               }
             }

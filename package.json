@@ -11,14 +11,25 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.0",
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.11.1",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@preline/overlay": "^1.4.0",
     "@react-oauth/google": "^0.11.1",
+    "@stripe/react-stripe-js": "^2.1.1",
+    "@stripe/stripe-js": "^1.54.2",
     "@types/jwt-decode": "^3.1.0",
     "axios": "^1.4.0",
+    "cloudinary-react": "^1.8.1",
+    "dotenv": "^16.3.1",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
-    "react-router-dom": "^6.14.2"
+    "react-router-dom": "^6.14.2",
+    "react-toastify": "^9.1.3"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

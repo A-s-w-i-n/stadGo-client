@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
-import UserLogin from './userLogin'
-import OwnerLogin from './ownerLogin'
-import '../UserRegister/costomColor.css'
+import UserLogin from '../user/userLogin'
+import OwnerLogin from '../owner/ownerLogin'
+import '../Register/costomColor.css'
 
 
 
@@ -28,9 +28,10 @@ function Login  ()  {
     }
   return (
     
-      <div >
+      <div  >
+        
       <div className="flex  justify-center  mt-9   " >
-        <h1 className="font-extrabold text-3xl">LOGIN</h1>
+        <h1 className="font-extrabold text-3xl  ">LOGIN</h1>
       </div>
 
       <div className="flex justify-center gap-4 ">

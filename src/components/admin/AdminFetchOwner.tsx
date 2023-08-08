@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api from "../../servises/api/axios interceptor ";
-import AdminHome from "../home/adminHome";
-import { ownerData } from "../../servises/interface/interface";
+import AdminHome from "./adminHome";
+import { ownerData } from "../../domain/modals/ownerData";
 
 const AdminFetchOwner: React.FC = () => {
   const itemPerpage = 8;
@@ -54,19 +54,6 @@ const AdminFetchOwner: React.FC = () => {
   const goToPage = (page: number): void => {
     setCurrentpage(page);
   };
-
-  // const paginationControll = ()  =>{
-  //     const totalPages : number = Math.ceil(ownerData.length/itemPerpage)
-  //     const control :JSX.Element[] = []
-
-  //     for(let i=1 ;i<=totalPages;i++){
-  //       control.push(
-  //         <button key={i} onClick={()=>goToPage(i)} className={currentPage === i ? "active" : ""}>{i}</button>
-  //       )
-  //     }
-  //     return paginationControll
-  // }
-
   return (
     <div>
       <AdminHome />

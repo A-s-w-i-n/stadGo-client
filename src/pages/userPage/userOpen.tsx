@@ -1,7 +1,7 @@
 import React from 'react'
 // import MainPagenav from '../navbar/mainPagenav'
 import {useNavigate} from "react-router-dom";
-import Navdesign from '../navbar/navdesign';
+import Navdesign from '../../components/navbar/navdesign';
 
 const UserOpening = () => {
     const navigate = useNavigate()
