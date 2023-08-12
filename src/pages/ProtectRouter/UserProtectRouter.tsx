@@ -6,9 +6,9 @@ interface UserProtectedRouterProps {
   children: React.ReactNode
 }
 
-const UserProtectedRouter : React.FC<UserProtectedRouterProps> = ({children}) : any => {
+const UserProtectedRouter : React.FC<UserProtectedRouterProps> = ({children})  => {
    const user =JSON.parse(  localStorage.getItem('user') as string)
-    console.log(user , "jhgksfjdgksjgfkgkjfgh");
+ 
     
   return user ? children : <Navigate to={"/login"}/>
       

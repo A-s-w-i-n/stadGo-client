@@ -11,6 +11,13 @@ const api : AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    // const token =JSON.parse(localStorage.getItem('user')as string)
+    // const tokens= token.token
+
+    // if(tokens){
+    //   config.headers['authorization'] = `Bearer ${tokens}`
+    // }
+    
     
     return config;
   },
@@ -29,3 +36,5 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+

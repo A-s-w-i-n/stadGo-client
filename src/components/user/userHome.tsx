@@ -1,56 +1,102 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navdesign from "../navbar/navdesign";
+import UserPremium from "../payment/userPremium";
+import api from "../../servises/api/axios interceptor ";
+import { userData } from "../../domain/modals/userData";
+import MainPagenav from "../navbar/mainPagenav";
 
-const UserHome = () => {
+const UserHome : React.FC = () => {
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const user = localStorage.getItem("user");
-  //   const owner = localStorage.getItem ("owner")
-  //   if (user) {
-  //     navigate("/userHome");
-  //   } else if (!user) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  const [usersPremium, setUserPremium] = useState(false);
+  const [checkDetail, setCheckDetail] = useState<userData>();
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
 
 
+
+  const openPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+  };
+
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
+  const emaiId = JSON.parse(localStorage.getItem("user") as string);
+  const email = emaiId.LoginCheck.email;
+
+  const handleFetchUser = async (e: React.FocusEvent) => {
+    e.preventDefault();
+
+    if (checkDetail) {
+      setUserPremium(false);
+      navigate("/stadiumList");
+    } else {
+      openPaymentModal()
+      setUserPremium(true);
+    }
+    // navigate('/stadiumList')
+  };
+
+  useEffect(() => {
+    api.post("/fetchUsers", { email }).then((fetchdata) => {
+      setCheckDetail(fetchdata.data.userDetail.premium);
+      console.log(fetchdata.data.userDetail.premium);
+    });
+  }, []);
 
   return (
     <div>
+    <form action="" onSubmit={handleFetchUser}>
       <div>
         <div>
-          <Navdesign />
-        </div>
-        <div className="h-screen flex  justify-center">
-          <div className="w-1/2  flex  items-center` justify-center">
-            <div className="mt-20 w-full ">
-              <img
-                className=" w-full"
-                src="/public/mainImages/userHome.png"
-                alt=""
-              />
-            </div>
+          <div>
+            <MainPagenav />
           </div>
-          <div className="w-1/2 h-screen flex ml-10  items-center">
-            <div className="">
-              <p className="font-serif text-5xl">WELCOME TO STUD GO</p>
-              <p className="ml-2 mt-3">EXPLORE THE STADIUM’S </p>
+          <div className="h-screen flex  justify-center">
+            <div className="w-1/2  flex  items-center` justify-center">
+              <div className="mt-20 w-full ">
+                <img
+                  className=" w-full"
+                  src="/public/mainImages/userHome.png"
+                  alt=""
+                />
+              </div>
             </div>
+            <div className="w-1/2 h-screen flex ml-10  items-center">
+              <div className="">
+                <p className="font-serif text-5xl">WELCOME TO STAD GO</p>
+                <p className="ml-2 mt-3">EXPLORE THE STADIUM’S </p>
+              </div>
 
-            <div className="absolute bottom-0 mb-9">
-              <button
-                className="rounded-full bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  font-serif  text-lg"
-                onClick={() => navigate("/orgDetail")}
-              >
-                Lets Go
-              </button>
+              <div className="absolute bottom-48 mb-30">
+                <button className="rounded-full fixed bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  bottom-9 font-serif  text-lg">
+                {checkDetail ? "Explore" : "Buy Premium"}  {""}
+                </button>
+               
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </form>
+    {isPaymentModalOpen &&
+        (<div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+              <div className="bg-white rounded-lg w-11/12 max-w-md mx-auto p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h5 className="text-xl font-semibold text-gray-800 ">
+                   Pay Using Paypal 
+                  </h5>
+                  {usersPremium ? <UserPremium /> : null}
+                </div>
+
+                
+                <button className="bg-cyan-300 px-3 py-2 rounded-lg" onClick={closePaymentModal}>close</button>
+              </div>
+            </div>
+                )
+        }
     </div>
+
   );
 };
 

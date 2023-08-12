@@ -5,6 +5,8 @@ import api from '../../servises/api/axios interceptor '
 
 const OwnerForm :React.FC =()=> {
   const navigate = useNavigate()
+  const [userOtp, setUserOtp] = useState<boolean>(false);
+  const [inputOtp, setInputOtp] = useState("");
   const [owner,setOwner] = useState<ownerAuth>({firstname:"",lastname:"",ownername:"",email:"",companyname:"",phone:"",password:"",location:""})
 
   const addOwner = ((e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -23,12 +25,8 @@ const OwnerForm :React.FC =()=> {
       
       if(firstname!==" "&&lastname!==" "&&ownername!==" "&&password!==" "&&phone!==" "&&email!==" "&&companyname!==" "&&location!==" "){
         const {data} = await api.post("/owner/ownerRegister",{...owner})
-        console.log(data,"4444");
         
-
-        if(data.owner){
-          navigate('/login')
-        }
+        handleOwnerOtp()
       }
     } catch (error) {
 
@@ -36,6 +34,26 @@ const OwnerForm :React.FC =()=> {
     }
 
   }
+  const handleOwnerOtp = async () => {
+    try {
+      setUserOtp(true);
+      const { data } = await api.post("/otp", { ...owner });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const verifyOtp = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const email = owner.email;
+    const otp = inputOtp;
+
+    try {
+      await api.post("/verifyOtp", { email, otp });
+      navigate("/login");
+      setUserOtp(false);
+    } catch (error) {}
+  };
 
 
 
@@ -50,7 +68,7 @@ const OwnerForm :React.FC =()=> {
         <div className="absolute top-56 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <div className="center shadow-2xl bg-white rounded-xl w-max h-4/5 gap-y-px">
             <div className="text-center pt-3">
-              REGISTER HERE
+              OWNER REGISTER
             </div>
             <div className="grid grid-cols-2 gap-4 mt-5 ">
               <input
@@ -117,13 +135,7 @@ const OwnerForm :React.FC =()=> {
                   REGISTER
                 </button>
                 <h3 className="text-center my-2">or</h3>
-                <button className="rounded-full bg-white border-y border-black px-3 py-2 ">
-                  <img
-                    className="object-contain h-5"
-                    src="https://o.remove.bg/downloads/c9d9aaa8-da55-430f-a432-e68618e1af40/download-removebg-preview.png"
-                    alt=""
-                  />
-                </button>
+                
                 <p>alredy have an accout <span className='text-cyan-500 cursor-pointer' onClick={()=>navigate('/login')}> LOGIN</span></p>
               </div>
             </div>
@@ -136,6 +148,34 @@ const OwnerForm :React.FC =()=> {
       </div>
     </div>
   </form>
+  {userOtp && (
+        <div className="fixed inset-0 z-50 overflow-auto bg-gray-400 bg-opacity-30 rounded-xl flex items-center justify-center">
+          <div className="bg-white rounded-lg w-11/12 max-w-md mx-auto p-6">
+            <div className=" justify-between text-center items-center mb-4">
+              <h5 className="text-xl text-center font-semibold text-gray-800 ">
+                Enter Otp
+              </h5>
+            </div>
+            <div className="flex justify-center items-center">
+              <input
+                type="text"
+                name="otp"
+                className="rounded-lg h-9 border-gray-300  border text-center"
+                placeholder="otp"
+                onChange={(e) => setInputOtp(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-center items-center">
+              <button
+                className="bg-cyan-300 px-3 mt-3 py-2 rounded-lg just "
+                onClick={verifyOtp}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
     

@@ -6,6 +6,8 @@ import UserHome from './components/user/userHome';
 import OwnerHome from './components/owner/ownerHome';
 import Login from './components/login/Login';
 import AdminLogin from './components/admin/adminLogin';
+import AdminFetchStadium from './components/admin/adminFetchStadiumFetch';
+import UserProfile from './components/user/UserProfile';
 
 
 import './App.css'
@@ -18,7 +20,7 @@ import OnwerstadiumList from './components/stadium/OnwerstadiumList';
 import UserProtectedRouter from './pages/ProtectRouter/UserProtectRouter';
 import OwnerProtectRouter from './pages/ProtectRouter/ownerProtectRouter';
 import UserSatdiumList from './components/stadium/userSatdiumList';
-import Paypal from './components/payment/paypal';
+import Paypal from './components/payment/ownerPremium';
 function App() {
   
 
@@ -35,12 +37,14 @@ function App() {
         <Route path='/Register' element={<Register/>}/>
         <Route path='/admin/fetchUser' element={<AdminFetchUser/>}/>
         <Route path='/admin/fetchOwner' element ={<AdminFetchOwner/>}/>
+        <Route path='/admin/fetchStadium' element={<AdminFetchStadium/>}/>
         <Route path='/Login' element={<Login/>}/>
         <Route path='/orgDetail' element={<UserProtectedRouter><OrgDetail/></UserProtectedRouter>}/>
         <Route path='/stadiumDetails' element={<OwnerProtectRouter><Stadium/></OwnerProtectRouter>}/>
         <Route path='/owner/stadiumlist' element={<OwnerProtectRouter><OnwerstadiumList/></OwnerProtectRouter>}/>
         <Route path='/stadiumList' element={<UserProtectedRouter><UserSatdiumList/></UserProtectedRouter>}/>
-        <Route path='owner/premium' element={<OwnerProtectRouter><Paypal/></OwnerProtectRouter>}/>
+        <Route path='/owner/premium' element={<OwnerProtectRouter><Paypal/></OwnerProtectRouter>}/>
+        <Route path='/userProfie' element={<UserProfile/>}/>
         
 
 

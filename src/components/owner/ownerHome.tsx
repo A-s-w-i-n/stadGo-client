@@ -5,7 +5,7 @@ import api from "../../servises/api/axios interceptor ";
 import { stadim } from "../../domain/modals/stadium";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Paypal from "../payment/paypal";
+import Paypal from "../payment/ownerPremium";
 import { ownerData } from "../../domain/modals/ownerData";
 
 const OwnerHome = () => {
@@ -16,13 +16,23 @@ const OwnerHome = () => {
   const userEmail = JSON.parse(localStorage.getItem("owner") as string);
   const email = userEmail.email;
   console.log(email);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   
+  const openPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+  };
+
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
+
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
     if(detailsCheck){
       setOnwerPrimium(false)
       navigate('/owner/stadiumlist')
     }else{
+      openPaymentModal()
       setOnwerPrimium(true)
     }
    
@@ -68,17 +78,39 @@ const OwnerHome = () => {
               </div>
               <div className="absolute bottom-0 mb-48">
                 <button
-                  className="rounded-full fixed bg-cyan-300 hover:bg-cyan-400 px-6 py-3 mb-44  font-serif  text-lg"
+                  className="rounded-full fixed bg-cyan-300 hover:bg-cyan-400 px-6 py-3 mb-48 bottom-9 font-serif  text-lg"
                   onClick={handleFetchDetail}
+                 
                 >
-                  Buy Premium{" "}
+                  {detailsCheck ? "Stadium" :"Buy Premium" }
                 </button>
+             
 
-                {OwnerPrimuim ? <Paypal /> : null}
               </div>
             </div>
           </div>
         </form>
+      
+        {isPaymentModalOpen &&
+        (<div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+              <div className="bg-white rounded-lg w-11/12 max-w-md mx-auto p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h5 className="text-xl font-semibold text-gray-800 ">
+                    
+                   Pay Using Paypal  :
+                  </h5>
+                  <p className="text-red-500">$200</p>
+                  
+                  
+                  {OwnerPrimuim ?<Paypal /> : null}
+                </div>
+
+                
+                <button className="bg-cyan-300 px-6 py-2 rounded-lg" onClick={closePaymentModal}>close</button>
+              </div>
+            </div>
+                )
+        }
       </div>
     </div>
   );

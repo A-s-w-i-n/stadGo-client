@@ -29,15 +29,20 @@ const OrgDetails: React.FC = () => {
         country !== ""
       ) {
         const emailId = JSON.parse(localStorage.getItem("user") as string);
-        const email = emailId.email;
-        console.log(email);
+        const email = emailId.LoginCheck.email;
+        console.log(emailId.LoginCheck.email
+          );
+          
+       
 
         const { data } = await api.post("/org/orgDetails", {
           ...orgDetail,
           email,
         });
+        
 
-        if (data.orgDetail) {
+        if (data) {
+          navigate('/owner/stadiumlist')
         }
       }
     } catch (error) {}

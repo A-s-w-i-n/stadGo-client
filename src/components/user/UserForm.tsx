@@ -12,6 +12,8 @@ import {
 
 const userForm: React.FC = () => {
   const navigate = useNavigate();
+  const [userOtp, setUserOtp] = useState<boolean>(false);
+  const [inputOtp, setInputOtp] = useState("");
   const [user, setUser] = useState<userAuth>({
     firstname: "",
     lastname: "",
@@ -52,19 +54,16 @@ const userForm: React.FC = () => {
           ...Guser,
           isGoogle: true,
         });
+
         if (data) {
-          const GaccessToken = data.sub;
-          const GsignCheck = data.name;
+          const GsignCheck = data.Guser.email;
+          const GaccessToken = data.Guser.username;
 
           localStorage.setItem(
             "user",
             JSON.stringify(GaccessToken, GsignCheck)
           );
-          localStorage.setItem(
-            "user",
-            JSON.stringify(GaccessToken, GsignCheck)
-          );
-          navigate("/userHome");
+          navigate("/userhome");
         }
       } catch (error) {
         console.error("Token not found");
@@ -92,13 +91,32 @@ const userForm: React.FC = () => {
         console.log(user);
 
         const { data } = await api.post("/userRegister", { ...user });
-
-        if (data.user) {
-          navigate("/login");
-        }
+        handleUserOtp();
       }
     } catch (error) {}
   };
+
+  const handleUserOtp = async () => {
+    try {
+      setUserOtp(true);
+      const { data } = await api.post("/otp", { ...user });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const verifyOtp = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const email = user.email;
+    const otp = inputOtp;
+
+    try {
+      await api.post("/verifyOtp", { email, otp });
+      navigate("/login");
+      setUserOtp(false);
+    } catch (error) {}
+  };
+
   return (
     <div className="fixed bg-customcolor">
       <form action="" onSubmit={handleSignup}>
@@ -106,7 +124,7 @@ const userForm: React.FC = () => {
           <div className="left w-1/2 h-screen bg-blue-300">
             <div className="absolute top-56 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <div className="center shadow-2xl bg-white rounded-2xl w-max h-4/5 gap-y-px">
-                <div className="text-center pt-3">REGISTER HERE</div>
+                <div className="text-center pt-3">USER REGISTER </div>
                 <div className="grid grid-cols-2 gap-4 mt-5 ">
                   <input
                     type="text"
@@ -158,7 +176,7 @@ const userForm: React.FC = () => {
                     </button>
                     <h3 className="text-center my-2 ">or</h3>
                     <button className="rounded-3xl bg-white border-y border-black   h-7">
-                      <GoogleOAuthProvider clientId="369233122526-6jq1er61ihvpfenp7aosiovivct318d4.apps.googleusercontent.com">
+                      {/* <GoogleOAuthProvider clientId="369233122526-6jq1er61ihvpfenp7aosiovivct318d4.apps.googleusercontent.com">
                         <GoogleLogin
                           size="medium"
                           type="icon"
@@ -167,8 +185,7 @@ const userForm: React.FC = () => {
                             console.log("Login Failed");
                           }}
                         />
-                      </GoogleOAuthProvider>
-                      ;
+                      </GoogleOAuthProvider> */}
                     </button>
                     <p>
                       alredy have an accout{" "}
@@ -187,6 +204,34 @@ const userForm: React.FC = () => {
           </div>
         </div>
       </form>
+      {userOtp && (
+        <div className="fixed inset-0 z-50 overflow-auto bg-gray-400 bg-opacity-30 rounded-xl flex items-center justify-center">
+          <div className="bg-white rounded-lg w-11/12 max-w-md mx-auto p-6">
+            <div className=" justify-between text-center items-center mb-4">
+              <h5 className="text-xl text-center font-semibold text-gray-800 ">
+                Enter Otp
+              </h5>
+            </div>
+            <div className="flex justify-center items-center">
+              <input
+                type="text"
+                name="otp"
+                className="rounded-lg h-9 border-gray-300  border text-center"
+                placeholder="otp"
+                onChange={(e) => setInputOtp(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-center items-center">
+              <button
+                className="bg-cyan-300 px-3 mt-3 py-2 rounded-lg just "
+                onClick={verifyOtp}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

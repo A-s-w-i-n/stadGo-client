@@ -1,11 +1,21 @@
 import React,{useState} from 'react'
+import { useNavigate } from 'react-router-dom';
 import {AiOutlineMenu,AiOutlineClose} from "react-icons/ai"
 
 const UserNav = () => {
+  const navigate = useNavigate()
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => {
       setShowSidebar((prevShowSidebar) => !prevShowSidebar);
     };
+
+    const handleLogout = ()=>{
+       localStorage.removeItem('user')
+
+       navigate('/login')
+   
+    
+    }
 
     const closeSidebar = () => {
       setShowSidebar(false);
@@ -13,7 +23,7 @@ const UserNav = () => {
   return (
     <div>
     {/* Main Navigation */}
-    <div className='fixed bg-white shadow-lg w-full h-16 flex items-center'>
+    <div className='fixed z-50  bg-white shadow-lg w-full h-16 flex items-center'>
       <img className='w-28 ml-5' src="/public/mainImages/STADGO-logos_black.png" alt="" />
       <div className='ml-auto mr-5'>
         {/* Toggle button */}
@@ -25,13 +35,13 @@ const UserNav = () => {
 
     {/* Sidebar */}
     <div
-      className={`fixed bg-cyan-200 h-screen w-64 right-0 top-16 transition-transform transform ${
+      className={`fixed z-50 bg-cyan-200 h-screen w-64 right-0 top-16 transition-transform transform ${
         showSidebar ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
       {/* Icon to close the sidebar */}
       {showSidebar && (
-        <div className="absolute top-0 left-0 mt-3 ml-3">
+        <div className="absolute  top-0 left-0 mt-3 ml-3">
           <button onClick={closeSidebar}>
             {/* Replace this with your desired icon for closing */}
            
@@ -52,7 +62,7 @@ const UserNav = () => {
     <td className="font-bold text-2xl mt-6 pt-4">Notification</td>
   </tr>
   <tr>
-    <td className="font-bold text-2xl pt-4">Logout</td>
+    <td className="font-bold text-2xl pt-4 cursor-pointer" onClick={handleLogout}>Logout</td>
   </tr>
   {/* Add more items as needed */}
 

@@ -11,6 +11,7 @@ import {
   GoogleCredentialResponse,
 } from "@react-oauth/google";
 import jwt_Decode from "jwt-decode";
+// import auth from "../../servises/api/auth";
 
 
 
@@ -85,6 +86,9 @@ const UserLogin: React.FC = () => {
       const { data } = await api.post("/login", { ...userLogin });
       if (data) {
         const LoginCheck = data.LoginCheck;
+        const token = data.accessToken
+        console.log(token,"toen");
+        
         console.log(data.message);
         if(data.message){
           if(data.message)genarateError(data.message)
@@ -94,9 +98,10 @@ const UserLogin: React.FC = () => {
         if (data.LoginCheck.isblocked == true) {
           navigate("/login");
         } else {
-          console.log(LoginCheck);
           
-          localStorage.setItem("user", JSON.stringify(LoginCheck));
+          
+          localStorage.setItem("user", JSON.stringify({token,LoginCheck}))
+          ;
 
           navigate("/userHome");
         }
@@ -135,9 +140,9 @@ const UserLogin: React.FC = () => {
             <button className="rounded-full ml-36 bg-cyan-300 py-3 px-3" >
               submit
             </button>
-            <h3 className="text-center my-2 ">or</h3>
+            {/* <h3 className="text-center my-2 ">or</h3> */}
             <div className="flex justify-center items-center ">
-              <button className="rounded-3xl bg-white border-y border-black h-2">
+              {/* <button className="rounded-3xl bg-white border-y border-black h-2">
                 <GoogleOAuthProvider clientId="369233122526-6jq1er61ihvpfenp7aosiovivct318d4.apps.googleusercontent.com">
                   <GoogleLogin
                     size="medium"
@@ -148,7 +153,7 @@ const UserLogin: React.FC = () => {
                     }}
                   />
                 </GoogleOAuthProvider>
-              </button>
+              </button> */}
             </div>
 
             <p className="mt-7 text-center">
