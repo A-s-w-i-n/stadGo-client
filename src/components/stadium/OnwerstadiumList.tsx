@@ -19,7 +19,8 @@ const OnwerstadiumList = () => {
   //   e.preventDefault();
 
   const emailId = JSON.parse(localStorage.getItem("owner") as string);
-  const email  = emailId.email;
+  const emailCheck  = emailId.OwnerLoginCheck;
+  const email = emailCheck.email
 
 
     useEffect(() => {
@@ -27,6 +28,7 @@ const OnwerstadiumList = () => {
         .post("/stadium/fetchStadium", {email})
         .then((fetchStadium) => {
           setStadiumData(fetchStadium.data.fetchStadiumData);
+
         })
         .catch(() => {});
     }, []);

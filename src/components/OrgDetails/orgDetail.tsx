@@ -6,7 +6,7 @@ import { json, useNavigate } from "react-router-dom";
 
 const OrgDetails: React.FC = () => {
   const navigate = useNavigate();
-  
+
   const [orgDetail, setOrgDetail] = useState<OrgDetail>({
     organizationname: "",
     organizationtype: "",
@@ -30,19 +30,14 @@ const OrgDetails: React.FC = () => {
       ) {
         const emailId = JSON.parse(localStorage.getItem("user") as string);
         const email = emailId.LoginCheck.email;
-        console.log(emailId.LoginCheck.email
-          );
-          
-       
-
+        console.log(emailId.LoginCheck.email);
         const { data } = await api.post("/org/orgDetails", {
           ...orgDetail,
           email,
         });
-        
 
         if (data) {
-          navigate('/owner/stadiumlist')
+          navigate("/owner/stadiumlist");
         }
       }
     } catch (error) {}
@@ -118,8 +113,7 @@ const OrgDetails: React.FC = () => {
             </div>
             <div className=" text-center mt-10">
               <button className="bg-blue-500 rounded-md px-3 py-2">
-                 submit
-               
+                submit
               </button>
             </div>
           </div>

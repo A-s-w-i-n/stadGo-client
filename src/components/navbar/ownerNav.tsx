@@ -67,7 +67,7 @@ const OwnerNav = () => {
         {/* Add your list items here */}
         <table className="p-4 mt-5 ml-8">
           <tr>
-            <td className="font-bold text-2xl mt-6 pt-4 ">Profile</td>
+            <td className="font-bold text-2xl mt-6 pt-4 cursor-pointer " onClick={()=>navigate("/owner/ownerProfile")}>Profile</td>
           </tr>
           <tr>
             <td className="font-bold text-2xl mt-6 pt-4">Chat</td>

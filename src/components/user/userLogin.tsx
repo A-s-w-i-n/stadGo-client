@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer,toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { jwtPaylode } from "../../domain/modals/jwtDecode";
+import { useDispatch} from 'react-redux'
+import { userLogged } from "../../Redux/user/userSlice";
+
 
 import {
   GoogleOAuthProvider,
@@ -18,10 +21,11 @@ import jwt_Decode from "jwt-decode";
 const genarateError = (err : any)=> toast.error(err,{ 
   autoClose : 2000,
   position : toast.POSITION.TOP_RIGHT
-
+  
 })
 
 const UserLogin: React.FC = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = useState({
     email: "",
@@ -85,9 +89,12 @@ const UserLogin: React.FC = () => {
     try {
       const { data } = await api.post("/login", { ...userLogin });
       if (data) {
+
         const LoginCheck = data.LoginCheck;
         const token = data.accessToken
         console.log(token,"toen");
+        console.log(data.LoginCheck.username ,"irshad");
+        
         
         console.log(data.message);
         if(data.message){
@@ -101,8 +108,8 @@ const UserLogin: React.FC = () => {
           
           
           localStorage.setItem("user", JSON.stringify({token,LoginCheck}))
-          ;
-
+          
+         dispatch(userLogged({username:data.LoginCheck.username,email:data.LoginCheck.email}))
           navigate("/userHome");
         }
       }

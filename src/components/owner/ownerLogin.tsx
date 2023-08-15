@@ -33,13 +33,16 @@ const OwnerLogin :React.FC = () => {
             const {data} = await api.post('/owner/ownerLogin',{...ownerLogin})
 
             if(data){
-              console.log(data);
+              console.log(data,"sfd");
               const OwnerLoginCheck =data.ownerLoginCheck
+              const accessToken = data.accessToken
+              
+              
               if(data.ownerLoginCheck.isblocked == true){
                 navigate('/login')
               }else{
 
-                localStorage.setItem('owner',JSON.stringify(OwnerLoginCheck))
+                localStorage.setItem('owner',JSON.stringify({accessToken,OwnerLoginCheck}))
                   navigate('/ownerHome')
               }
             }

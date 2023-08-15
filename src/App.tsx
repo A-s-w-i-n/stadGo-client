@@ -8,6 +8,9 @@ import Login from './components/login/Login';
 import AdminLogin from './components/admin/adminLogin';
 import AdminFetchStadium from './components/admin/adminFetchStadiumFetch';
 import UserProfile from './components/user/UserProfile';
+import DetaildView from './components/stadium/detaildView';
+import OwnerProfile from './components/owner/ownerProfile';
+import VideoUplode from './components/owner/videoUplode';
 
 
 import './App.css'
@@ -44,8 +47,10 @@ function App() {
         <Route path='/owner/stadiumlist' element={<OwnerProtectRouter><OnwerstadiumList/></OwnerProtectRouter>}/>
         <Route path='/stadiumList' element={<UserProtectedRouter><UserSatdiumList/></UserProtectedRouter>}/>
         <Route path='/owner/premium' element={<OwnerProtectRouter><Paypal/></OwnerProtectRouter>}/>
-        <Route path='/userProfie' element={<UserProfile/>}/>
-        
+        <Route path='/userProfile' element={<UserProtectedRouter><UserProfile/></UserProtectedRouter>}/>
+        <Route path='/detailedView/:id' element={<DetaildView/>}/>
+        <Route path='/owner/ownerProfile' element={<OwnerProtectRouter><OwnerProfile/></OwnerProtectRouter>}/>
+        <Route path='/owner/videoUplode' element={<VideoUplode/>}/>
 
 
       </Routes>

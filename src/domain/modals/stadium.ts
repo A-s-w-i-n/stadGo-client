@@ -1,4 +1,5 @@
 export interface stadim {
+  _id ?:string
     stadiumname : string,
     maxcapacity : string,
     sportstype : string,

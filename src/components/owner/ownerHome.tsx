@@ -14,8 +14,11 @@ const OwnerHome = () => {
 
   const [detailsCheck, setDetailsCheck] = useState<ownerData>();
   const userEmail = JSON.parse(localStorage.getItem("owner") as string);
-  const email = userEmail.email;
-  console.log(email);
+  const emailId = userEmail.OwnerLoginCheck;
+  const email = emailId.email
+
+  
+
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false)
   
   const openPaymentModal = () => {

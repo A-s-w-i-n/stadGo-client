@@ -1,7 +1,10 @@
 import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import {AiOutlineMenu,AiOutlineClose} from "react-icons/ai"
+import { useDispatch } from 'react-redux';
+// import { userLogout } from '../../Redux/user/userSlice';
 
+// const dispatch = useDispatch()
 const UserNav = () => {
   const navigate = useNavigate()
   const [showSidebar, setShowSidebar] = useState(false);
@@ -11,7 +14,7 @@ const UserNav = () => {
 
     const handleLogout = ()=>{
        localStorage.removeItem('user')
-
+  //  dispatch(userLogout())
        navigate('/login')
    
     
@@ -53,10 +56,13 @@ const UserNav = () => {
       <table className="p-4 mt-5 ml-8">
 
   <tr>
-    <td className="font-bold text-2xl mt-6 pt-4 ">Profile</td>
+    <td className="font-bold text-2xl mt-6 pt-4 "onClick={()=>navigate('/userProfile')} >Profile</td>
   </tr>
   <tr>
     <td className="font-bold text-2xl mt-6 pt-4">Chat</td>
+  </tr>
+  <tr>
+    <td className="font-bold text-2xl mt-6 pt-4"onClick={()=>navigate('/stadiumList')}>Stadium</td>
   </tr>
   <tr>
     <td className="font-bold text-2xl mt-6 pt-4">Notification</td>
