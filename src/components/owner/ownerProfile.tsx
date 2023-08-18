@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import OwnerNav from '../navbar/ownerNav'
 import api from '../../servises/api/axios interceptor ';
 import { stadim } from '../../domain/modals/stadium';
+import {CgProfile} from 'react-icons/cg'
 
 const OwnerProfile = () => {
 
@@ -29,9 +30,13 @@ const OwnerProfile = () => {
     <div>
       <OwnerNav/>
       <div className="bg-white  w-full h-screen  flex   ">
+        <p className='text-center font-semibold mt-14'><CgProfile/></p>
         <div className="bg-gray-400 bg-opacity-20 w-[68rem] fixed rounded-xl ml-48 h-[36rem] m flex">
+          
           <div className="w-[30%] p-5">
+          
             <div className="relative mt-1 h-[540px] flex w-100  flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+            
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
                 <img
                   src=""

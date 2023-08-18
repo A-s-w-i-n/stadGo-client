@@ -50,7 +50,7 @@ function App() {
         <Route path='/userProfile' element={<UserProtectedRouter><UserProfile/></UserProtectedRouter>}/>
         <Route path='/detailedView/:id' element={<DetaildView/>}/>
         <Route path='/owner/ownerProfile' element={<OwnerProtectRouter><OwnerProfile/></OwnerProtectRouter>}/>
-        <Route path='/owner/videoUplode' element={<VideoUplode/>}/>
+        <Route path='/owner/videoUplode' element={<OwnerProtectRouter><VideoUplode/></OwnerProtectRouter>}/>
 
 
       </Routes>

@@ -76,6 +76,9 @@ const OwnerNav = () => {
             <td className="font-bold text-2xl mt-6 pt-4">Notification</td>
           </tr>
           <tr>
+            <td className="font-bold text-2xl mt-6 pt-4 cursor-pointer"onClick={()=>navigate("/owner/videoUplode")}>uplode video</td>
+          </tr>
+          <tr>
             {/* <td className="font-bold text-2xl mt-6 pt-4 cursor-pointer" >Add Stadium</td> */}
           </tr>
 

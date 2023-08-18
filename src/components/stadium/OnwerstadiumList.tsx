@@ -4,8 +4,11 @@ import { stadim } from "../../domain/modals/stadium";
 import api from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 import {AiOutlineMenu} from 'react-icons/ai'
+import { useDispatch } from "react-redux";
+import { ownerLogged } from "../../Redux/owner/ownerSlice";
 
 const OnwerstadiumList = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
   const [selectedMainImages, setSelectedMainImages] = useState<{ [stadiumId: string]: string }>(
@@ -32,6 +35,9 @@ const OnwerstadiumList = () => {
         })
         .catch(() => {});
     }, []);
+  
+    
+
  
   if (stadiumData) {
     navigate("/owner/stadiumlist");

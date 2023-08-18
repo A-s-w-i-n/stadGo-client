@@ -1,12 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../../servises/api/axios interceptor '
+import { useDispatch } from 'react-redux'
+import { ownerLogged } from '../../Redux/owner/ownerSlice'
 
 
 
 
 
 const OwnerLogin :React.FC = () => {
+  const dispatch = useDispatch()
     const navigate = useNavigate()
     const [ownerLogin,setOwnerLogin] = useState({
         email : "",
@@ -43,6 +46,7 @@ const OwnerLogin :React.FC = () => {
               }else{
 
                 localStorage.setItem('owner',JSON.stringify({accessToken,OwnerLoginCheck}))
+                dispatch(ownerLogged({ownername : data.ownerLoginCheck.ownername,email : data.ownerLoginCheck.email}))
                   navigate('/ownerHome')
               }
             }

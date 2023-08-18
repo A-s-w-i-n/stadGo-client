@@ -10,4 +10,5 @@ export interface stadim {
     discription : string,
     location : string,
     email : string
+    video ?: string
   }

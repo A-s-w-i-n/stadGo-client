@@ -4,7 +4,8 @@ export const s3Config = {
     bucketName : `${import.meta.env.VITE_S3BUCKET_NAME}`,
     region  : `${import.meta.env.VITE_S3BUCKET_REGION}`,
     accessKeyId : `${import.meta.env.VITE_ACCESS_KEY_ID}`,
-    secretAccessKey :`${import.meta.env.VITE_SECRET_ACCESS_KEY}`
+    secretAccessKey :`${import.meta.env.VITE_SECRET_ACCESS_KEY}`,
+    url : `${import.meta.env.VITE_S3BUCKET_URL}`
 }
 
 const S3_BUCKET = s3Config.bucketName

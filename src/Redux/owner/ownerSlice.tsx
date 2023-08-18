@@ -13,7 +13,9 @@ const ownerSlice = createSlice({
     initialState : INITIAL_STATE,
     reducers : {
         ownerLogged : (state , action)=>{
-
+            state.ownername = action.payload.ownername
+            state.ownerEmail = action.payload.email
+            state.stadiumId = action.payload.stadiumId  
         }
     }
 })

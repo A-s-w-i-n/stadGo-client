@@ -67,8 +67,13 @@ const DetaildView : React.FC = () => {
           
           </div>
         </div>
-        <div className="flex w-1/2 bg-white items-center justify-center  h-screen">
-          <div className="bg-cyan-60 w-[35rem] h-[33rem]"></div>
+        <div className="flex w-1/2 bg justify-around   h-screen">
+          
+          <div className=" w-[35rem] h-[33rem]">
+                        <video className="grid rounded-2xl rounded-t-2xl w-full h-[29rem] mt-9" controls width="400" autoPlay
+                 src={carosal?.video}/>
+              
+          </div>
         </div>
       </div>
       <div className=" w-full bg-white h-100">

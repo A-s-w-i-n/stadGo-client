@@ -3,11 +3,15 @@ import MainPagenav from "../navbar/mainPagenav";
 import api from "../../servises/api/axios interceptor ";
 import { stadim } from "../../domain/modals/stadium";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 // import {image} from 'cloudinary-react'
 import axios from "axios";
+import { userLogged } from "../../Redux/user/userSlice";
+import { ownerLogged } from "../../Redux/owner/ownerSlice";
 
 const Stadium = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   
 
   const [stadium, setStadium] = useState<stadim>({
@@ -91,6 +95,7 @@ const Stadium = () => {
             email,
           });
           if (data) {
+           
             navigate("/owner/stadiumlist");
             
           }
