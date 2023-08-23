@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AWS from "aws-sdk";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 import { stadim } from "../../domain/modals/stadium";
 import OwnerNav from "../navbar/ownerNav";
@@ -56,19 +56,15 @@ const VideoUpload = () => {
   const emailId = JSON.parse(localStorage.getItem("owner") as string);
   const emailCheck = emailId.OwnerLoginCheck;
   const email = emailCheck.email;
-  
 
   useEffect(() => {
-     api
-      .post("/stadium/fetchStadium", { email })
-      .then((result) => {
-        console.log(result.data.fetchStadiumData[0]._id);
+    apiAuth.post("/stadium/fetchStadium", { email }).then((result) => {
+      console.log(result.data.fetchStadiumData[0]._id);
 
-        setStadiumInfo(result.data.fetchStadiumData);
-        console.log(stadiumInfo[0].video);
-      });
+      setStadiumInfo(result.data.fetchStadiumData);
+      // console.log(stadiumInfo[0].video);
+    });
   }, []);
-
 
   const uplodeVideos = async () => {
     handleUpload();
@@ -80,10 +76,14 @@ const VideoUpload = () => {
       });
       if (uplode.status) {
         closeUplodeVideoModal();
+        stadiumInfo[0].video;
       }
     } else {
     }
   };
+  // useEffect(()=>{
+
+  // },[])
 
   return (
     <div>
@@ -97,9 +97,13 @@ const VideoUpload = () => {
                 src={item.image[0]}
                 alt="Sunset in the mountains"
               />
-              <video className="grid rounded-2xl mt-9" controls width="400"
-                 src={item.video}  />
-             
+              <video
+                className="grid rounded-2xl mt-9"
+                controls
+                width="400"
+                src={item.video}
+              />
+
               <div className="px-6 py-4">
                 <div className="font-bold text-xl text-center mb-2">
                   {item.stadiumname}
@@ -117,7 +121,7 @@ const VideoUpload = () => {
           </div>
         ))}
         {uplodeVideoModal && (
-          <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 flex items-center justify-center z-50 ">
             <div className="border rounded-xl bg-slate-200 border-black w-100">
               <div className="flex items-center justify-center w-full">
                 <label

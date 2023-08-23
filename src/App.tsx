@@ -24,6 +24,7 @@ import UserProtectedRouter from './pages/ProtectRouter/UserProtectRouter';
 import OwnerProtectRouter from './pages/ProtectRouter/ownerProtectRouter';
 import UserSatdiumList from './components/stadium/userSatdiumList';
 import Paypal from './components/payment/ownerPremium';
+import Chat from './components/Chat/Chat';
 function App() {
   
 
@@ -51,8 +52,8 @@ function App() {
         <Route path='/detailedView/:id' element={<DetaildView/>}/>
         <Route path='/owner/ownerProfile' element={<OwnerProtectRouter><OwnerProfile/></OwnerProtectRouter>}/>
         <Route path='/owner/videoUplode' element={<OwnerProtectRouter><VideoUplode/></OwnerProtectRouter>}/>
-
-
+        <Route path='/Chat' element={<Chat role={'user'}></Chat>}/>
+        <Route path='/owner/Chat' element={<Chat role={'owner'}></Chat>}/>
       </Routes>
     </Router>
     </>

@@ -1,17 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import "tailwindcss/tailwind.css"
-import { store,persistor } from './Redux/store.tsx'
-import { Provider } from 'react-redux'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+import "tailwindcss/tailwind.css";
+import { store, persistor } from "./Redux/store.tsx";
+import { Provider } from "react-redux";
 
-
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-    <App />
+      <App />
     </Provider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

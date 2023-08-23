@@ -1,24 +1,21 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 
-const api : AxiosInstance = axios.create({
+const api: AxiosInstance = axios.create({
+  baseURL: "http://localhost:3000",
+});
+export const apiAuth: AxiosInstance = axios.create({
   baseURL: "http://localhost:3000",
 });
 
 api.interceptors.request.use(
   (config) => {
-    // const token =JSON.parse(localStorage.getItem('user')as string)
-    // const tokens= token.token
+    const token = JSON.parse(localStorage.getItem("user") as string);
+    const tokens = token.token;
 
-    // if(tokens){
-    //   config.headers['authorization'] = `Bearer ${tokens}`
-    // }
-    
-    
+    if (tokens) {
+      config.headers["authorization"] = `Bearer ${tokens}`;
+    }
+
     return config;
   },
   (error: AxiosError) => {
@@ -26,7 +23,7 @@ api.interceptors.request.use(
   }
 );
 
-api.interceptors.response.use(
+apiAuth.interceptors.response.use(
   (respose: AxiosResponse) => {
     return respose;
   },
@@ -36,5 +33,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-
-

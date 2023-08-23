@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Icons } from "react-toastify";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import { useSelector } from "react-redux";
 
 const OwnerNav = () => {
   const navigate = useNavigate();
@@ -15,11 +17,22 @@ const OwnerNav = () => {
 
   // }
   const handleLogout = () => {
-    localStorage.removeItem('owner');
+    localStorage.removeItem("owner");
 
     navigate("/login");
   };
+  const { userId }: any = useSelector((state: any) => state.user);
+  const { ownerId }: any = useSelector((state: any) => state.owner);
+  console.log(ownerId);
 
+  const createChat = () => {
+    apiAuth.post("/chat/accessChat", { ownerId, userId }).then((result) => {
+      if (result) {
+        navigate("/owner/Chat");
+        // setFirstChat(false)
+      }
+    });
+  };
   const toggleSidebar = () => {
     setShowSidebar((prevShowSidebar) => !prevShowSidebar);
   };
@@ -67,16 +80,42 @@ const OwnerNav = () => {
         {/* Add your list items here */}
         <table className="p-4 mt-5 ml-8">
           <tr>
-            <td className="font-bold text-2xl mt-6 pt-4 cursor-pointer " onClick={()=>navigate("/owner/ownerProfile")}>Profile</td>
+            <td
+              className="font-bold text-2xl mt-6 pt-4 cursor-pointer "
+              onClick={() => navigate("/owner/ownerProfile")}
+            >
+              Profile
+            </td>
           </tr>
           <tr>
-            <td className="font-bold text-2xl mt-6 pt-4">Chat</td>
+            <td
+              className="font-bold cursor-pointer text-2xl mt-6 pt-4"
+              onClick={createChat}
+            >
+              Chat
+            </td>
           </tr>
           <tr>
             <td className="font-bold text-2xl mt-6 pt-4">Notification</td>
           </tr>
           <tr>
-            <td className="font-bold text-2xl mt-6 pt-4 cursor-pointer"onClick={()=>navigate("/owner/videoUplode")}>uplode video</td>
+            <td
+              className="font-bold text-2xl mt-6 pt-4"
+              onClick={() => navigate("/owner/Chat")}
+            >
+              chat
+            </td>
+          </tr>
+          {/* <tr>
+    <td className="font-bold text-2xl mt-6 pt-4 cursor-pointer " onClick={()=>navigate('/stadiumDetails')}>add stadium</td>
+  </tr> */}
+          <tr>
+            <td
+              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
+              onClick={() => navigate("/owner/videoUplode")}
+            >
+              uplode video
+            </td>
           </tr>
           <tr>
             {/* <td className="font-bold text-2xl mt-6 pt-4 cursor-pointer" >Add Stadium</td> */}

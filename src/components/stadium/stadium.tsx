@@ -1,18 +1,12 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import MainPagenav from "../navbar/mainPagenav";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { stadim } from "../../domain/modals/stadium";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-// import {image} from 'cloudinary-react'
 import axios from "axios";
-import { userLogged } from "../../Redux/user/userSlice";
-import { ownerLogged } from "../../Redux/owner/ownerSlice";
 
 const Stadium = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  
 
   const [stadium, setStadium] = useState<stadim>({
     stadiumname: "",
@@ -25,6 +19,7 @@ const Stadium = () => {
     discription: "",
     location: "",
     email: " ",
+    id: "",
   });
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,16 +83,18 @@ const Stadium = () => {
           image.length > 0
         ) {
           const emialId = JSON.parse(localStorage.getItem("owner") as string);
-          const email = emialId.email;
+          const email = emialId.OwnerLoginCheck.email;
+          console.log(email);
 
-          const { data } = await api.post("/stadium/staiumDetails", {
+          const id = emialId.OwnerLoginCheck._id;
+
+          const { data } = await apiAuth.post("/stadium/staiumDetails", {
             ...stadium,
             email,
+            id,
           });
           if (data) {
-           
             navigate("/owner/stadiumlist");
-            
           }
         }
       } catch (error) {}
@@ -236,7 +233,7 @@ const Stadium = () => {
               </div>
             </div>
             <div className=" text-center mt-6">
-              <button className="bg-blue-500 rounded-md px-3 py-2" >
+              <button className="bg-blue-500 rounded-md px-3 py-2">
                 submit
               </button>
             </div>

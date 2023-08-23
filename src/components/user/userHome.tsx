@@ -25,34 +25,25 @@ const UserHome: React.FC = () => {
   const handleFetchUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (checkDetail) {
-      setUserPremium(false);
-      navigate("/stadiumList");
-    } else {
-      openPaymentModal();
-      setUserPremium(true);
-    }
-    // navigate('/stadiumList')
+  //   if (checkDetail) {
+  //     setUserPremium(false);
+  //     navigate("/stadiumList");
+  //   } else {
+  //     openPaymentModal();
+  //     setUserPremium(true);
+  //   }
   };
 
-  const genarateSuccess = (succ : any)=>toast.success(succ,{
-   autoClose : 2000,
-   position : toast.POSITION.TOP_RIGHT
-  })
+  // const genarateSuccess = (succ : any)=>toast.success(succ,{
+  //  autoClose : 2000,
+  //  position : toast.POSITION.TOP_RIGHT
+  // })
 
-  useEffect(() => {
-    api.post("/fetchUsers", { email }).then((fetchdata) => {
-      setCheckDetail(fetchdata.data.userDetail.premium);
-      console.log(fetchdata.data.message);
-
-      if(fetchdata.data.message){
-        if(fetchdata.data.message)genarateSuccess(fetchdata.data.message)
-        
-      }
-    });
-  }, []);
-
-  
+  // useEffect(() => {
+  //   api.post("/fetchUsers", { email }).then((fetchdata) => {
+  //     setCheckDetail(fetchdata.data.userDetail.premium);
+  //   });
+  // }, []);
 
   return (
     <div>
@@ -79,8 +70,10 @@ const UserHome: React.FC = () => {
                 </div>
 
                 <div className="absolute bottom-48 mb-30">
-                  <button className="rounded-full fixed bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  bottom-9 font-serif  text-lg">
-                    {checkDetail ? "Explore" : "Buy Premium"} {""}
+                  <button className="rounded-full fixed bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  bottom-9 font-serif  text-lg" onClick={()=>navigate('/stadiumList')}>
+                    {/* {checkDetail ?  */}
+                    Explore
+                     {/* : "Buy Premium"} {""} */}
                   </button>
                 </div>
               </div>
@@ -88,7 +81,7 @@ const UserHome: React.FC = () => {
           </div>
         </div>
       </form>
-      {isPaymentModalOpen && (
+      {/* {isPaymentModalOpen && (
         <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded-lg w-11/12 max-w-md mx-auto p-6">
             <div className="flex justify-between items-center mb-4">
@@ -105,10 +98,9 @@ const UserHome: React.FC = () => {
               close
             </button>
           </div>
-
         </div>
-      )}
-      <ToastContainer/>
+      )} */}
+      <ToastContainer />
     </div>
   );
 };

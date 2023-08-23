@@ -3,10 +3,8 @@ import api from "../../servises/api/axios interceptor ";
 import AdminHome from "./adminHome";
 import { userData } from "../../domain/modals/userData";
 
-
 const AdminFetchUser: React.FC = () => {
-
-  const itemPerpage = 8
+  const itemPerpage = 8;
   const [userData, setStudetData] = useState<userData[]>([]);
   const [currentPage, setCurrentpage] = useState<number>(1);
 
@@ -15,7 +13,7 @@ const AdminFetchUser: React.FC = () => {
     id: string
   ) => {
     e.preventDefault();
-    
+
     try {
       const userBlock = await api.post("/admin/blockUser", { id });
 
@@ -45,21 +43,18 @@ const AdminFetchUser: React.FC = () => {
       .catch(() => {});
   }, [handleUserUnblock, handleUserBlock]);
 
-//pagination part
+  //pagination part
 
-const startIndex :  number = (currentPage -1)* itemPerpage
-const endIndex : number = startIndex + itemPerpage
-const currentPageData : userData[] = userData.slice(startIndex,endIndex)
+  const startIndex: number = (currentPage - 1) * itemPerpage;
+  const endIndex: number = startIndex + itemPerpage;
+  const currentPageData: userData[] = userData.slice(startIndex, endIndex);
 
-const goToPage = (page : number):void=>{
-  setCurrentpage(page)
-}
-
-
+  const goToPage = (page: number): void => {
+    setCurrentpage(page);
+  };
 
   return (
     <div>
-      
       <AdminHome />
       <div className="flex flex-row w-screen ">
         <form action="">
@@ -113,21 +108,23 @@ const goToPage = (page : number):void=>{
       </div>
 
       <div className="flex items-center justify-center">
-        {currentPage>1 && (
+        {currentPage > 1 && (
+          <button
+            className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            onClick={() => goToPage(currentPage - 1)}
+          >
+            Previous
+          </button>
+        )}
 
-          <button className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={()=>goToPage(currentPage-1)}>
-          Previous
-        </button>
-          )
-}
-
-{currentPage<Math.ceil(userData.length / itemPerpage) && (
-
-  
-  <button className="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white" onClick={()=>goToPage(currentPage+1)}>
-          Next
-        </button>
-          )} 
+        {currentPage < Math.ceil(userData.length / itemPerpage) && (
+          <button
+            className="flex items-center justify-center px-3 h-8 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            onClick={() => goToPage(currentPage + 1)}
+          >
+            Next
+          </button>
+        )}
       </div>
     </div>
   );

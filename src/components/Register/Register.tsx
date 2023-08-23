@@ -1,10 +1,7 @@
-
-
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import UserForm from "../user/UserForm";
 import OwnerForm from "../owner/OwnerForm";
-import './costomColor.css'
-
+import "./costomColor.css";
 
 function Register() {
   const [showOwner, setShowOwner] = useState(false);
@@ -17,19 +14,18 @@ function Register() {
   const handleShowOwner = () => {
     setShowOwner(true);
     setShowUser(false);
-    
   };
-  useEffect(()=>{
+  useEffect(() => {
     document.body.classList.add("custom-body-color");
 
     return () => {
       document.body.classList.remove("custom-body-color");
     };
-  },[])
+  }, []);
   return (
     <div className="">
       <div className="flex  justify-center  mt-3 mb-6 ">
-        <h1 className="font-extrabold text-3xl">Register Now</h1>
+        <h1 className="font-extrabold text-white text-3xl">Register Now</h1>
       </div>
 
       <div className="flex justify-center gap-4 mt-6">

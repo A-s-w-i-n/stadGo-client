@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer,toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { jwtPaylode } from "../../domain/modals/jwtDecode";
-import { useDispatch} from 'react-redux'
+import { useDispatch } from "react-redux";
 import { userLogged } from "../../Redux/user/userSlice";
-
 
 import {
   GoogleOAuthProvider,
@@ -16,16 +15,14 @@ import {
 import jwt_Decode from "jwt-decode";
 // import auth from "../../servises/api/auth";
 
-
-
-const genarateError = (err : any)=> toast.error(err,{ 
-  autoClose : 2000,
-  position : toast.POSITION.TOP_RIGHT
-  
-})
+const genarateError = (err: any) =>
+  toast.error(err, {
+    autoClose: 2000,
+    position: toast.POSITION.TOP_RIGHT,
+  });
 
 const UserLogin: React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [userLogin, setUserLogin] = useState({
     email: "",
@@ -62,10 +59,7 @@ const UserLogin: React.FC = () => {
         });
         if (data) {
           const Glogincheck = data.Guser;
-          localStorage.setItem(
-            "user",
-            JSON.stringify(Glogincheck)
-          );
+          localStorage.setItem("user", JSON.stringify(Glogincheck));
           navigate("/userHome");
         } else {
         }
@@ -87,29 +81,27 @@ const UserLogin: React.FC = () => {
     e.preventDefault();
 
     try {
-      const { data } = await api.post("/login", { ...userLogin });
+      const { data } = await apiAuth.post("/login", { ...userLogin });
       if (data) {
-
         const LoginCheck = data.LoginCheck;
-        const token = data.accessToken
-        console.log(token,"toen");
-        console.log(data.LoginCheck.username ,"irshad");
-        
-        
+        const token = data.accessToken;
         console.log(data.message);
-        if(data.message){
-          if(data.message)genarateError(data.message)
+        if (data.message) {
+          if (data.message) genarateError(data.message);
         }
-        
-      
+
         if (data.LoginCheck.isblocked == true) {
           navigate("/login");
         } else {
-          
-          
-          localStorage.setItem("user", JSON.stringify({token,LoginCheck}))
-          
-         dispatch(userLogged({username:data.LoginCheck.username,email:data.LoginCheck.email}))
+          localStorage.setItem("user", JSON.stringify({ token, LoginCheck }));
+
+          dispatch(
+            userLogged({
+              username: data.LoginCheck.username,
+              email: data.LoginCheck.email,
+              userId: data.LoginCheck._id,
+            })
+          );
           navigate("/userHome");
         }
       }
@@ -117,12 +109,12 @@ const UserLogin: React.FC = () => {
   };
 
   return (
-    <div className="relative h-screen ">
+    <div className="relative h-screen  ">
       <form action="" onSubmit={handleLogin}>
         <div className="flex justify-center h-full">
           <div className="w-1/2 p-4 bg-whilte-600"></div>
         </div>
-        <div className="absolute top-64 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 h-2/3 shadow-xl rounded-2xl p-4">
+        <div className="absolute top-64 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-96 h-96  shadow-xl rounded-2xl p-4 bg-opacity-30 ">
           <p className="text-center text-2xl">USER</p>
 
           <div className="">
@@ -144,7 +136,7 @@ const UserLogin: React.FC = () => {
             />
           </div>
           <div className="items-center justify-center">
-            <button className="rounded-full ml-36 bg-cyan-300 py-3 px-3" >
+            <button className="rounded-full ml-36 bg-cyan-300 py-3 px-3">
               submit
             </button>
             {/* <h3 className="text-center my-2 ">or</h3> */}
@@ -163,7 +155,7 @@ const UserLogin: React.FC = () => {
               </button> */}
             </div>
 
-            <p className="mt-7 text-center">
+            <p className="mt-7 text-center cursor-pointer">
               alredy have and account{" "}
               <span
                 className="text-blue-400"
@@ -175,7 +167,7 @@ const UserLogin: React.FC = () => {
           </div>
         </div>
       </form>
-    <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

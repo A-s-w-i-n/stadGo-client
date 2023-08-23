@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userAuth } from "../../domain/modals/user";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import jwt_Decode from "jwt-decode";
 import { jwtPaylode } from "../../domain/modals/jwtDecode";
 import {
@@ -90,7 +90,7 @@ const userForm: React.FC = () => {
         console.log("its workinnnnnng");
         console.log(user);
 
-        const { data } = await api.post("/userRegister", { ...user });
+        const { data } = await apiAuth.post("/userRegister", { ...user });
         handleUserOtp();
       }
     } catch (error) {}
@@ -99,37 +99,37 @@ const userForm: React.FC = () => {
   const handleUserOtp = async () => {
     try {
       setUserOtp(true);
-      const { data } = await api.post("/otp", { ...user });
+      const { data } = await apiAuth.post("/otp", { ...user });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const verifyOtp = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const verifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     const email = user.email;
     const otp = inputOtp;
 
     try {
-      await api.post("/verifyOtp", { email, otp });
+      await apiAuth.post("/verifyOtp", { email, otp });
       navigate("/login");
       setUserOtp(false);
     } catch (error) {}
   };
 
   return (
-    <div className="fixed bg-customcolor">
+    <div className="fixed bg-customcolor ">
       <form action="" onSubmit={handleSignup}>
-        <div className="relative h-screen flex mt-8 bg-blue-500">
-          <div className="left w-1/2 h-screen bg-blue-300">
-            <div className="absolute top-56 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="center shadow-2xl bg-white rounded-2xl w-max h-4/5 gap-y-px">
+        <div className="relative h-screen flex mt-8 bg-blue-500  ">
+          <div className="left w-1/2 h-screen bg-blue-300 ">
+            <div className="absolute top-56 left-1/2 transform -translate-x-1/2 -translate-y-1/2  ">
+              <div className="center shadow-2xl bg-white rounded-2xl w-max h-4/5 gap-y-px bg-opacity-40  ">
                 <div className="text-center pt-3">USER REGISTER </div>
                 <div className="grid grid-cols-2 gap-4 mt-5 ">
                   <input
                     type="text"
                     name="firstname"
-                    className="ml-7 w-60 rounded-xl border-gray-300 border p-2 mr-4 mt-3"
+                    className="ml-7 w-60 rounded-xl border-gray-300 border-2 p-2 mr-4 mt-3 "
                     placeholder="firstname"
                     onChange={addUser}
                   />

@@ -12,7 +12,7 @@ const UserSatdiumList = () => {
 
   useEffect(() => {
     api
-      .get("stadium/fetchStadiumList")
+      .get("/stadium/fetchStadiumList")
       .then((stadiumList) => {
         setStadiumData(stadiumList.data.fetchList);
       })
@@ -33,7 +33,7 @@ const UserSatdiumList = () => {
               />
             </div>
             <div className="p-6 text-center">
-              []{" "}
+              {" "}
               <h4 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                 {item.stadiumname}
               </h4>

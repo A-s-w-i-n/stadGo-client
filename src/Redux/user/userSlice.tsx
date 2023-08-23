@@ -3,7 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 const INITIAL_STATE ={
     username : "",
     email  : "",
-    // orgId :''
+    userId : ""
 
 }
 
@@ -14,7 +14,7 @@ const userSlice = createSlice({
      userLogged : (state ,action)=>{
         state.username = action.payload.username
         state.email = action.payload.email
-        // state.orgId = action.payload.id 
+        state.userId = action.payload.userId 
      },
     //  userLogout : (state)=>{
     //     Object.assign(state,INITIAL_STATE)

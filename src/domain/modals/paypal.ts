@@ -1,5 +1,5 @@
-import { stadim } from "./stadium"
+import { stadim } from "./stadium";
 export interface paypalProps {
-    stadium : stadim,
-    handleAddStadium : ()=>Promise<void>
+  stadium: stadim;
+  handleAddStadium: () => Promise<void>;
 }

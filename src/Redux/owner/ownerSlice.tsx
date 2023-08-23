@@ -15,6 +15,7 @@ const ownerSlice = createSlice({
         ownerLogged : (state , action)=>{
             state.ownername = action.payload.ownername
             state.ownerEmail = action.payload.email
+            state.ownerId = action.payload.ownerId
             state.stadiumId = action.payload.stadiumId  
         }
     }

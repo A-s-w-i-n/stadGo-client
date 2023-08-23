@@ -9,18 +9,13 @@ const AdminFetchStadium: React.FC = () => {
   const [ownerData, setOnwerData] = useState<stadim[]>([]);
   const [currentPage, setCurrentpage] = useState<number>(1);
 
- 
-
   useEffect(() => {
     api
       .get("/stadium/fetchStadiumList")
       .then((fetchOwner) => {
-        console.log(fetchOwner.data.fetchList
-          );
-        
-        
+        console.log(fetchOwner.data.fetchList);
 
-        setOnwerData(fetchOwner.data.fetchList );
+        setOnwerData(fetchOwner.data.fetchList);
       })
       .catch(() => {});
   }, []);
@@ -49,7 +44,6 @@ const AdminFetchStadium: React.FC = () => {
                     <th className="px-4 py-2">Org Name</th>
                     <th className="px-4 py-2">Rented Stadium</th>
                     <th className="px-4 py-2">Price</th>
-                   
                   </tr>
                 </thead>
                 <tbody>
@@ -62,7 +56,6 @@ const AdminFetchStadium: React.FC = () => {
                       <td className="border px-4 py-2">{item.email}</td>
                       <td className="border px-4 py-2">{item.location}</td>
                       <td className="border px-4 py-2">{item.price}</td>
-                     
                     </tr>
                   ))}
                 </tbody>
