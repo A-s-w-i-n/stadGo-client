@@ -1,8 +1,8 @@
 export interface Chats {
   _id: string;
   chatname: string;
-  user: string;
-  owner: string;
+  User: string;
+  Owner: string;
   latestMessage: latest;
 }
 
@@ -13,9 +13,9 @@ export interface latest {
 
 export interface message {
   _id: string;
-  user: string;
-  owner: string;
+  User: string;
+  Owner: string;
   content: string;
-  chats: Chats;
+  chat: Chats;
   createdAt: string;
 }

@@ -14,6 +14,8 @@ const userForm: React.FC = () => {
   const navigate = useNavigate();
   const [userOtp, setUserOtp] = useState<boolean>(false);
   const [inputOtp, setInputOtp] = useState("");
+  const [otpTimer, setOtpTimer] = useState<number>(60)
+  const [resendDisabled, setResendDisabled] = useState<boolean>(false);
   const [user, setUser] = useState<userAuth>({
     firstname: "",
     lastname: "",
@@ -71,6 +73,26 @@ const userForm: React.FC = () => {
     } else {
       console.log(credentialResponse);
     }
+  };
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (userOtp && otpTimer > 0) {
+      timeout = setTimeout(() => {
+        setOtpTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }else if(otpTimer === 0 ){
+      setResendDisabled(false); 
+
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  },[userOtp, otpTimer])
+  const handleResendOtp = () => {
+    setOtpTimer(60); // Reset the timer
+    setResendDisabled(true); 
+    handleUserOtp()
   };
 
   // user Register
@@ -222,9 +244,25 @@ const userForm: React.FC = () => {
               />
             </div>
             <div className="flex justify-center items-center">
+              {otpTimer > 0 ? (
+                <p className="text-gray-600 text-sm">
+                  Resend OTP in {otpTimer} seconds
+                </p>
+              ) : (
+                <button
+                  className="bg-cyan-300 px-3 py-2 rounded-lg"
+                  onClick={handleResendOtp}
+                  disabled={resendDisabled}
+                >
+                  Resend OTP
+                </button>
+              )}
+            </div>
+            <div className="flex justify-center items-center">
               <button
                 className="bg-cyan-300 px-3 mt-3 py-2 rounded-lg just "
                 onClick={verifyOtp}
+                // disabled ={otpTimer >0}
               >
                 Submit
               </button>

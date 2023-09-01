@@ -49,7 +49,13 @@ const VideoUpload = () => {
 
   const handleUpload = () => {
     if (selectedFile) {
-      uploadVideoToS3(selectedFile);
+      if(selectedFile.type.startsWith('video/')){
+
+        uploadVideoToS3(selectedFile);
+      }else{
+        console.log("Selected file is not a valid video");
+        
+      }
     }
   };
 
@@ -57,23 +63,32 @@ const VideoUpload = () => {
   const emailCheck = emailId.OwnerLoginCheck;
   const email = emailCheck.email;
 
-  useEffect(() => {
-    apiAuth.post("/stadium/fetchStadium", { email }).then((result) => {
-      console.log(result.data.fetchStadiumData[0]._id);
+  const fetchVideo=()=>{
 
-      setStadiumInfo(result.data.fetchStadiumData);
-      // console.log(stadiumInfo[0].video);
+    
+      apiAuth.post("/stadium/fetchStadium", { email }).then((result) => {
+        console.log(result.data.fetchStadiumData[0]._id);
+
+        setStadiumInfo(result.data.fetchStadiumData);
+        // console.log(stadiumInfo[0].video);
     });
-  }, []);
+  
+
+}
+
+useEffect(()=>{
+  fetchVideo()
+},[])
 
   const uplodeVideos = async () => {
     handleUpload();
     const id = stadiumInfo[0]._id;
     if (uplodeVideo) {
-      const uplode = await api.post("/owner/videoUplode", {
+      const uplode = await apiAuth.post("/owner/videoUplode", {
         uplodeVideo,
         id,
       });
+      fetchVideo()
       if (uplode.status) {
         closeUplodeVideoModal();
         stadiumInfo[0].video;

@@ -18,7 +18,7 @@ const OwnerHome = () => {
   const email = emailId.email;
   console.log(email);
 
-  console.log(detailsCheck);
+ 
 
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
@@ -32,13 +32,13 @@ const OwnerHome = () => {
 
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (detailsCheck) {
+    // if (detailsCheck) {
       setOnwerPrimium(false);
       navigate("/owner/stadiumlist");
-    } else {
-      openPaymentModal();
-      setOnwerPrimium(true);
-    }
+    // } else {
+      // openPaymentModal();
+      // setOnwerPrimium(true);
+    // }
 
     try {
     } catch (error) {
@@ -83,14 +83,17 @@ const OwnerHome = () => {
                   className="rounded-full fixed bg-cyan-300 hover:bg-cyan-400 px-6 py-3 mb-48 bottom-9 font-serif  text-lg"
                   onClick={handleFetchDetail}
                 >
-                  {detailsCheck ? "Stadium" : "Buy Premium"}
+                  {/* {detailsCheck ?  */}
+                  
+                  Stadium
+                   {/* "Buy Premium"} */}
                 </button>
               </div>
             </div>
           </div>
         </form>
 
-        {isPaymentModalOpen && (
+        {/* {isPaymentModalOpen && (
           <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
             <div className="bg-white rounded-lg w-11/12 max-w-md mx-auto p-6">
               <div className="flex justify-between items-center mb-4">
@@ -110,7 +113,7 @@ const OwnerHome = () => {
               </button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ const Chat = (props: role) => {
   const [selectUser, setSelcetUser] = useState<Chats>();
   const currentId = props.role === "user" ? userId : ownerId;
   const currentRole = props.role;
+  const [searchQuery, setSearchQuery] = useState("");
   console.log(chatId, "chatId");
 
   useEffect(() => {
@@ -40,9 +41,20 @@ const Chat = (props: role) => {
 
   const setMessageFn = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessages(e.target.value);
-    console.log("kkk", newMessage);
+    console.log("kkkkkkkkkkkkkkkkkkkk", newMessage);
+  };
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
+  const filteredChats = chats.filter((chat) => {
+    const ownerName = chat.Owner?.ownername || ""; // Default to an empty string if ownername is undefined
+    return ownerName.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+  const filteredChatsUser = chats.filter((chat) => {
+    const username = chat.User?.username || ""; // Default to an empty string if username is undefined
+    return username.toLowerCase().includes(searchQuery.toLowerCase());
+  });
   useEffect(() => {
     const fetch = async () => {
       if (props.role === "user") {
@@ -60,171 +72,244 @@ const Chat = (props: role) => {
   }, []);
 
   useEffect(() => {
-    socket.on("message received", (newMessage: message) => {
-      console.log("got a new message");
+    socket.on("message Received", (newMessage: message) => {
+      console.log("got a new messageeeeeeeeeeeeeeee",newMessage);
+      console.log('ddddddddddd=',newMessage.User);
+      console.log('ddddddddddd=',newMessage.Owner);
+      
 
-      if (chatId !== newMessage.chats._id) {
-        console.log(`message from ${newMessage.user}${newMessage.owner}`);
+      if (chatId !== newMessage.chat?._id) {
+        console.log('chatIddddd===',chatId);
+        console.log('newMessage.chat?._id=======',newMessage.chat?._id);
+        
+        
+        // console.log(`message from ${newMessage.user}${newMessage.owner}`);
       } else {
-        setMessage((prevMessage) => [...prevMessage, newMessage]);
+        setMessage( [...message, newMessage]);
       }
     });
-  }, [socket]);
+  }, [socket,message]);
 
   const handleMessageFetch = async (chatId: string) => {
+    console.log(chatId, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     const { data } = await apiAuth.get(`/message/${chatId}`);
-    console.log(data, "vvvvv");
-
+    console.log(
+      data.messages,
+      "vvvvvccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    );
     setMessage(data.messages);
-    console.log(data.messages, "mess");
-
-    socket.emit("joinChat", chatId);
+    socket.emit("join-chat", chatId);
   };
-  const sendMessgae = (content: string, chatId: string, currentId: string) => {
+  const sendMessgae = async (
+    content: string,
+    chatId: string,
+    currentId: string
+  ) => {
     // const content = chat;
-    apiAuth
-      .post("/message/send", { content, currentId, currentRole, chatId })
-      .then((result) => {});
+  const {data}=  await apiAuth.post("/message/send", {
+      content,
+      currentId,
+      currentRole,
+      chatId,
+    });
+    return data
+    // handleMessageFetch(chatId);
   };
   const handleMessageSend = async () => {
-    if (newMessage.trim().length > 0) {
-      const result = await sendMessgae(newMessage, chatId, currentId);
-      console.log(result, "response meassage");
-      setNewMessages("");
-      socket.emit("newMessage ", result);
-      setMessage([...message]);
+    console.log("neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
-      console.log(result);
+    if (newMessage.trim().length > 0) {
+      const result  = await sendMessgae(newMessage, chatId, currentId);
+      console.log(newMessage,"||",chatId ,"||" ,currentId,"pppppppppppppppppppppppppppppppppppp");
+      
+      console.log(result, "response meassagelllllllllllllllllllllllllllllllllllllllllll");
+      setNewMessages("");
+      socket?.emit("newMessage", result.msg);
+      console.log(result,'mkkkkkkkkkkkkkkkkkkkkkkk');
+      setMessage([...message,result.msg]);
+     
+
     }
   };
+  
 
-  console.log(message, "sdfsdfsdf");
+  // useEffect(() => {}, [message]);
+  // console.log(message);
 
-  useEffect(() => {});
 
-  console.log(chats);
 
   return (
-    <div className="">
+    <div className="h-screen flex flex-col">
       <UserNav />
 
-      <div className="flex ">
-        <div className="grid  gap-3 w-[14rem] ml-3 rounded-lg border border-black h-[36rem]">
-          <div className="grid   w-full h-10 rounded-lg border border-black"></div>
+      <div className="mt-32 w-full">
+        <div className="container mx-auto mt-[-128px]">
+          <div className="py-6 h-screen">
+            
+            <div className="flex border border-gray-300 rounded shadow-lg h-full">
+              {/* Left */}
+              <div className="w-1/3 border flex flex-col">
+                {/* Header */}
+                <div className="py-2 px-3 bg-gray-200 flex flex-row justify-between items-center">
+                  <div className="flex"></div>
+                </div>
 
-          <div className=" h-[32.7rem] rounded-lg w-full border border-black">
-            {props.role === "user"
-              ? chats?.map((item) => (
-                  <div>
-                    <div className=" flex w-full h-10 rounded-lg border border-black">
-                      <div className="flex w-8 h-8 mt-1 ml-1 border  border-black rounded-full  "></div>
-                      <li
-                        className=" w-36  h-10"
-                        key={item._id}
-                        onClick={() => {
-                          selectChat(item);
-                          setChatId(item._id);
-                          handleMessageFetch(item._id);
-                        }}
-                      ></li>
-                      <div className="flex  ml-6">{item.owner}</div>
+                {/* Search */}
+                <div className="py-2 px-2 bg-gray-300">
+        <input
+          type="text"
+          className="w-full text-black px-2 py-2 text-sm border"
+          placeholder="Search or start new chat"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+      </div>
 
-                      <div className="felx mt-4   ">
-                        {item.latestMessage?.content}
-                      </div>
-                    </div>
-                  </div>
-                ))
-              : chats?.map((item) => (
-                  <div>
-                    <div className="flex  w-full h-10 rounded-lg border border-black">
-                      <div className="flex w-8 h-8 mt-1 ml-1 border  border-black rounded-full  "></div>
-                      <li
-                        className=" w-36  h-10"
-                        key={item._id}
-                        onClick={() => {
-                          selectChat(item);
-                          setChatId(item._id);
-                          handleMessageFetch(item._id);
-                        }}
-                      ></li>
-                      <div className="flex  ml-6">{item.user}</div>
+                {/* Contacts */}
+                <div className="bg-gray-300 overflow-auto flex-1">
+                  {props.role === "user"
+                    ? filteredChats?.map((item) => (
+                        <div>
+                          <div className=" flex w-full  bg-slate-100  list-none mt-4 h-14  border">
+                            <div className="flex w-8 h-8 mt-3 ml-1 border  border-black rounded-full  "></div>
+                            <li
+                              className=" w-[14rem] h-full"
+                              key={item._id}
+                              onClick={() => {
+                                selectChat(item);
+                                setChatId(item._id);
+                                handleMessageFetch(item._id);
+                                setOwnername(item.Owner)
+                              }}
+                            >
 
-                      <div className="felx mt-4   ">
-                        {item.latestMessage?.content}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-          </div>
-        </div>
-        <div className=" grid ml-7 rounded-lg w-[68rem] border border-black">
-          <div className="w-full h-[32rem] text-center content-center relative">
-            {props.role === "user" ? (
-              <div className="w-full h-[32rem] text-center content-center relative">
-                {message
-                  .slice()
-                  .reverse()
-                  .map((item, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${
-                        item.user ? "justify-end" : "justify-start"
-                      } fixed bottom-0 right-0 mb-[4rem] mr-7 bg-slate-400 w-[25rem] text-center rounded-lg h-10`}
-                      style={{ bottom: index * 50 }} // Adjust this value to control spacing
-                    >
-                      {item?.content}
-                    </div>
-                  ))}
-              </div>
-            ) : (
-              <div className="w-full h-[32rem] text-center content-center relative">
-                {message
-                  .slice()
-                  .reverse()
-                  .map((item, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${
-                        item.owner ? "justify-end" : "justify-start"
-                      } fixed bottom-0 right-0 mb-[4rem] mr-7 bg-slate-400 w-[25rem] text-center rounded-lg h-10`}
-                      style={{ bottom: index * 50 }} // Adjust this value to control spacing
-                    >
-                      {item?.content}
-                    </div>
-                  ))}
+
+                              <div className="flex font-extrabold  font-serif  ml-6">{item.Owner?.ownername}</div>
+                            <span className="felx mt-4 ml-6  font-thin text-xs text-slate-600">
+                              {item.latestMessage?.content}
+                            </span>
+                            </li>
+                          </div>
+                        </div>
+                      ))
+                    : filteredChatsUser?.map((item) => (
+                        <div>
+                          <div className="flex w-full  bg-slate-100  list-none mt-4 h-14  border">
+                            <div
+                              className="flex w-full h-10"
+                              key={item._id}
+                              onClick={() => {
+                                selectChat(item);
+                                setChatId(item._id);
+                                handleMessageFetch(item._id);
+                              }}
+                            >
+                              <div className="flex w-8 h-8 mt-3  border   border-black rounded-full  "></div>
+
+                            <div className="flex font-extrabold h-7  font-serif ml-6  ">{item.User?.username}</div>
+
+                            <div className="flex mt-8 w-[6rem] font-thin text-xs text-slate-600 ">
+                              {item.latestMessage?.content}
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  {/* Contact entries */}
+                </div>
               </div>
 
-              // <ul className="list-none">
-              //   {message.map((item, index) => (
-              //     <li
-              //       key={index}
-              //       className={`${item.owner ? "justify-end" : "justify-start"} flex`}
-              //     >
-              //       <div className="w-full h-[32rem] text-center content-center relative">
-              //         <div className="flex fixed justify-end bottom-0 mb-[4rem] bg-slate-400 w-[25rem] text-center rounded-lg h-10">
-              //           {item?.content}
-              //         </div>
-              //       </div>
-              //     </li>
-              //   ))}
-              // </ul>
-            )}
-          </div>
+              {/* Right */}
+              <div className="w-2/3 border flex flex-col">
+                {/* Header */}
+                <div className="py-2 px-3 bg-gray-200 flex flex-row justify-between items-center">
+                  {/* <div className="flex items-center">
+                    <div>
+                      <img
+                        className="w-10 h-10 rounded-full"
+                        src="https://darrenjameseeley.files.wordpress.com/2014/09/expendables3.jpeg"
+                        alt="Chat Avatar"
+                      />
+                    </div>
+                  
+                    <div className="ml-4">
+                      <p className="text-gray-800">New Movie! Expendables 4</p>
+                      <p className="text-xs text-gray-700 mt-1">
+                        Andrés, Tom, Harrison, Arnold, Sylvester
+                      </p>
+                    </div>
+                  </div> */}
 
-          <div className=" grid w-full h-10 ">
-            <input
-              className="absolute w-[64rem] ml-2 rounded-xl  border-gray-300 border p-2 pr-12"
-              type="text"
-              name="message"
-              placeholder="Enter your message"
-              onChange={(e) => setMessageFn(e)}
-            />
-            <div
-              className="absolute right-5   top- bg-blue-500 text-white px-3 py-3 rounded-full"
-              onClick={handleMessageSend}
-            >
-              <AiOutlineSend />
+                  <div className="flex"></div>
+                </div>
+
+
+                {/* Messages */}
+
+{/* {username || ownername && */}
+              
+                {props.role === "user" ? (
+           <div className="flex-1 overflow-auto bg-gray-100">
+           {message.map((item, index) => (
+             <div
+               key={index}
+               className={`flex items-center mb-4 mx-7 ${
+                 item.User ? "justify-end" : "justify-start"
+               }`}
+             >
+               <div
+                 className={`bg-slate-400 rounded-lg p-2 ${
+                   item.User ? "text-left" : "text-right"
+                 }`}
+                 style={{ maxWidth: "80%" }} // Limit the width of the chat bubble
+               >
+                 {item?.content}
+               </div>
+             </div>
+           ))}
+         </div>
+                ) : (
+                  <div className="flex-1 overflow-auto bg-gray-100">
+                  {message.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`flex items-center mb-4 mx-7 ${
+                        item.Owner ? "justify-end" : "justify-start"
+                      }`}
+                    >
+                      <div
+                        className={`bg-slate-400 rounded-lg p-2 ${
+                          item.Owner ? "text-left" : "text-right"
+                        }`}
+                        style={{ maxWidth: "80%" }} // Limit the width of the chat bubble
+                      >
+                        {item?.content}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                )}
+             
+                {/* } */}
+
+                {/* Input */}
+                <div className="bg-gray-300 px-4 py-4 flex items-center">
+                  <div className="flex-1 mx-4">
+                    <input
+                      className="w-full border rounded px-2 py-2"
+                      type="text"
+                      name="message"
+                      onChange={(e) => setMessageFn(e)}
+                    />
+                  </div>
+                  <div
+                    className="bg-blue-500 text-white px-3 py-3 rounded-lg"
+                    onClick={handleMessageSend}
+                  >
+                    <AiOutlineSend />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

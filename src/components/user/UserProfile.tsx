@@ -45,9 +45,7 @@ const UserProfile = () => {
           imageUrl.push(result.data.secure_url);
           setUrl(result.data.secure_url);
          
-           
-              updateProfile()
-          
+          updateProfile()
         } catch (error) {
           console.log(error);
         }
@@ -65,27 +63,31 @@ console.log(url,"comm");
       console.log(data.uplodeImg);
       // handleSvgClick();
       setImage(data.uplodeImg);
+      fetchProfile()
       console.log(data.uplodeImg,"lllll");
     }
   };
 
+  const fetchProfile = () =>{
+    apiAuth.post("/fetchProfileImg",{id}).then((result)=>{
+      setImage(result.data.findImg.profileImg)
+      
+      console.log(result.data.findImg.profileImg,"image");
   
-  useEffect(()=>{
+      
+      
+  
+  
+    })
+   
+    
+  }
+  
 
-  },[updateProfile])
 
   useEffect(() => {
-  apiAuth.post("/fetchProfileImg",{id}).then((result)=>{
-    setImage(result.data.findImg.profileImg)
-    console.log(result.data.findImg.profileImg,"image");
 
-    
-    
-console.log(result.data,"fetched is comming");
-
-  })
- 
-  
+    fetchProfile()
     handleFecthOrg();
   }, []);
   return (
@@ -124,7 +126,7 @@ console.log(result.data,"fetched is comming");
             <div className="relative mt-1 h-[540px] flex w-100  flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
                 <img
-                  src={image || image.profileImg}
+                  src={image }
                   alt="img-blur-shadow"
                   className="h-56 w-72"
                 />

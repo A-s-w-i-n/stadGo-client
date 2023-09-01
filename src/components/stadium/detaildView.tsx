@@ -7,7 +7,12 @@ import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 
 import { stadim } from "../../domain/modals/stadium";
+import { userData } from "../../domain/modals/userData";
+import { toast } from "react-toastify";
 const DetaildView: React.FC = () => {
+  const [usersPremium, setUserPremium] = useState(false);
+  const [checkDetail, setCheckDetail] = useState<userData>();
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const navigate = useNavigate();
   const settings = {
     dots: true,
@@ -45,88 +50,91 @@ const DetaildView: React.FC = () => {
       }
     });
   };
+  const emaiId = JSON.parse(localStorage.getItem("user") as string);
+  const email = emaiId.LoginCheck.email;
+  const openPaymentModal = () => {
+    setIsPaymentModalOpen(true);
+  };
+  const closePaymentModal = () => {
+    setIsPaymentModalOpen(false);
+  };
+
+        if (checkDetail) {
+      // setUserPremium(false);
+      // navigate("/Chat");
+    } else {
+      // openPaymentModal();
+      // setUserPremium(true);
+    }
+
+
+
+  useEffect(() => {
+    api.post("/fetchUsers", { email }).then((fetchdata) => {
+      setCheckDetail(fetchdata.data.userDetail.premium);
+    });
+  }, []);
 
   return (
     <div className="">
-      <UserNav />
-      <div className="flex">
-        <div className="flex w-1/2 items-center justify-center  bg-white h-screen">
-          <div className="bg-white w-[35rem] h-[33rem]">
-            <div className=" justify-center items-center">
+    <UserNav />
+    <div className="flex w-full space-x-4 mt-8">
+      <div className="flex-1">
+     
+        {image && image.length>0 && (
+          <Slider {...settings}>
               {image && (
                 <Slider {...settings}>
                   <div>
                     <img
                       src={image[0]}
                       alt=""
-                      className="w-full h-96 mt-12 rounded-lg"
+                      className="w-full h-[26rem] rounded-md"
                     />
                   </div>
                   <div>
                     <img
                       src={image[1]}
                       alt=""
-                      className="w-full h-96 mt-12 rounded-lg"
+                      className="w-full h-[26rem]  rounded-md"
                     />
                   </div>
                   <div>
                     <img
                       src={image[2]}
-                      className="w-full h-96 mt-12 rounded-lg"
+                      className="w-full h-[26rem]  rounded-md"
                     />
                   </div>
                 </Slider>
               )}
-            </div>
-          </div>
-        </div>
-        <div className="flex w-1/2 bg justify-around   h-screen">
-          <div className=" w-[35rem] h-[33rem]">
-            <video
-              className="grid rounded-2xl rounded-t-2xl w-full h-[29rem] mt-9"
-              controls
-              width="400"
-              autoPlay
-              src={carosal?.video}
-            />
-          </div>
-        </div>
+            {/* Other slider items */}
+          </Slider>
+        )}
       </div>
-      <div className=" w-full bg-white h-100">
-        <div className="text-center font-bold text-4xl font-serif">
-          <p>{carosal?.stadiumname?.toLocaleUpperCase()}</p>
-        </div>
-        <div className="text-center font-mono">
-          <p>{carosal?.location}</p>
-        </div>
-        <div className="text-center font-serif text-2xl font-semibold mt-8">
-          <p>{carosal?.maxcapacity}</p>
-        </div>
-        <div className="text-center  font-semibold">
-          <p>
-            {carosal?.fromdate}/ <span>{carosal?.todate}</span>
-          </p>
-        </div>
-        <div className="text-center font-mono text-2xl font-semibold">
-          <p>{carosal?.sportstype}</p>
-        </div>
-        <div className="text-center font-serif text-2xl font-semibold">
-          <p>{carosal?.price}</p>
-        </div>
-        <div className="text-center  font-serif">
-          <p>{carosal?.discription}</p>
-        </div>
-
-        <div className="text-center mt-4  font-serif">
-          <button
-            className="bg-cyan-300 py-3 rounded-3xl  px-3"
-            onClick={createChat}
-          >
-            START CHAT
-          </button>
-        </div>
+      <div className="flex-1">
+        <video className="w-full h-[26rem] rounded-md" controls autoPlay src={carosal?.video} />
       </div>
     </div>
+    <div className="bg-gray-100 p-4 rounded-lg mt-8 text-center">
+      <div className="text-2xl font-bold mb-2 mt-2">{carosal?.stadiumname?.toUpperCase()}</div>
+      <div className="text-lg mt-2">{carosal?.location}</div>
+      <div className="text-lg mt-2">{carosal?.maxcapacity}</div>
+      <div className="text-lg mt-2">{carosal?.sportstype}</div>
+      <div>
+        {carosal?.fromdate} / <span>{carosal?.todate}</span>
+      </div>
+      <div className="text-lg mt-2">{carosal?.discription}</div>
+      {/* Other info */}
+      <button
+        className={`mt-4 py-2 px-4 rounded-lg ${
+          checkDetail ? "bg-blue-500 text-white" : "bg-green-500 text-white"
+        }`}
+        onClick={createChat}
+      >
+        {checkDetail ? "START CHAT" : "Buy Premium"}
+      </button>
+    </div>
+  </div>
   );
 };
 

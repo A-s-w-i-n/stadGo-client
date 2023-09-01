@@ -7,34 +7,91 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { ownerLogged } from "../../Redux/owner/ownerSlice";
 
+
 const OnwerstadiumList = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const [stadiumname,setEditStadiumName] = useState("")
+  const [sportstype,setSportsType] = useState("")
+  const [fromdate,setFromdate] = useState("")
+  const [todate,setToDate] = useState("")
+  const [price,setPrice] = useState("")
+  const [image,setImage] = useState([""])
+  const [discription,setDiscription] =useState("")
+
   const [selectedMainImages, setSelectedMainImages] = useState<{
     [stadiumId: string]: string;
   }>(
-    {} // State to keep track of selected main images for each stadium
+    {} 
   );
-
+  const handleModalOpen = () => {
+    setIsPaymentModalOpen(true);
+  };
+  const handleModalClose = () =>{
+    setIsPaymentModalOpen(false)
+  }
+  
   // const handleFetch = async (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setStadiumData({ ...stadiumData, [e.target.name]: e.target.value });
   // };
   // const handleFetchStadium = async (e: React.FormEvent) => {
   //   e.preventDefault();
+  // const stadiumname = 
+
+  // const editStadiumDetail = (e:React.ChangeEvent<HTMLInputElement>)=>{
+
+  // }
+
+
+  
 
   const emailId = JSON.parse(localStorage.getItem("owner") as string);
   const emailCheck = emailId.OwnerLoginCheck;
   const email = emailCheck.email;
 
-  useEffect(() => {
+
+
+
+  const fetchStadiumList= () =>{
+
+ 
+  }
+  const fetchData = () => {
     apiAuth
       .post("/stadium/fetchStadium", { email })
       .then((fetchStadium) => {
+        console.log(fetchStadium.data.fetchStadiumData);
         setStadiumData(fetchStadium.data.fetchStadiumData);
+        setEditStadiumName(fetchStadium.data.fetchStadiumData.stadiumname);
+        setSportsType(fetchStadium.data.fetchStadiumData.sportstype);
+        setFromdate(fetchStadium.data.fetchStadiumData.fromdate);
+        setToDate(fetchStadium.data.fetchStadiumData.todate);
+        setPrice(fetchStadium.data.fetchStadiumData.price);
+        setDiscription(fetchStadium.data.fetchStadiumData.discription);
       })
       .catch(() => {});
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
+
+  
+  
+
+const updateStadiumList =async () =>{
+  
+  const data =await apiAuth.post('/stadium/editStadium',{stadiumname,sportstype,fromdate,todate,price,discription,image})
+  fetchData()
+console.log(data,"data");
+
+  handleModalClose()
+
+}
+
+
 
   if (stadiumData) {
     navigate("/owner/stadiumlist");
@@ -105,7 +162,7 @@ const OnwerstadiumList = () => {
             <div className="flex mb-3 mt-7">
               <p className="font-extrabold w-40 text-xl">Price:</p>
               <p className="font-normal text-gray-800 dark:text-gray-700 ml-6">
-                {item.price}
+              ₹{item.price}
               </p>
             </div>
             <div className="flex mb-3 mt-7">
@@ -113,6 +170,55 @@ const OnwerstadiumList = () => {
               <p className="font-normal text-gray-800 dark:text-gray-700 ml-6">
                 {item.discription}
               </p>
+            </div>
+            {isPaymentModalOpen && (
+              <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                <div className="bg-white rounded-lg w-11/12 max-w-md mx-auto p-6">
+                  <div className="flex text-center justify-center items-center mb-4">
+                    <h5 className="text-xl text-center font-semibold text-gray-800 ">
+                      EDIT STADIUM DETAILS
+                    </h5>
+                  </div>
+                  {stadiumData.map((item) => (
+                    <div>
+                      <div className="mt-3">
+                        Stadium Name : <input type="text" placeholder={item.stadiumname}  onChange={(e)=>setEditStadiumName(e.target.value)} />
+                      </div>
+                      <div className="mt-3">
+                        Sports Type : <input type="text" placeholder={item.sportstype} onChange={(e)=>setSportsType(e.target.value)}/>
+                      </div>
+                      <div className="mt-3">
+                        From Date : <input type="date" placeholder={item.fromdate} onChange={(e)=>setFromdate(e.target.value)}/>
+                      </div>
+                      <div className="mt-3">
+                        To date : <input type="date" placeholder={item.todate} onChange={(e)=>setToDate(e.target.value)}/>
+                      </div>
+                      <div className="mt-3">
+                        Price : <input type="text" placeholder={item.price} onChange={(e)=>setPrice(e.target.value)}/>
+                      </div>
+                      <div className="mt-3">
+                        Discription : <input type="text"  placeholder={item.discription}  onChange={(e)=>setDiscription(e.target.value)} />
+                      </div>
+                     
+                    </div>
+                  ))}
+                  <div className="flex justify-center mt-4">
+                    {" "}
+                    {/* Add this div for center alignment */}
+                    <button className="bg-cyan-300 px-3 py-2 rounded-lg" onClick={updateStadiumList}>
+                      APPLY
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="flex item-end justify-end">
+              <button
+                className="flext mt-4 w-24 h-10 border border-black rounded-lg bg-white hover:bg-cyan-300"
+                onClick={handleModalOpen}
+              >
+                Edit Details
+              </button>
             </div>
             {/* <a className="inline-block" href="#">
       <button

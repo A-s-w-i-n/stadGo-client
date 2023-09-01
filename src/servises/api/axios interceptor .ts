@@ -9,12 +9,22 @@ export const apiAuth: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = JSON.parse(localStorage.getItem("user") as string);
+    const token = JSON.parse(localStorage.getItem("user") as string)
     const tokens = token.token;
 
     if (tokens) {
       config.headers["authorization"] = `Bearer ${tokens}`;
     }
+
+    // const ownerToken = JSON.parse(localStorage.getItem("owner") as string)
+    // console.log(ownerToken, "aaaaaa");
+
+    // const ownerTockens = ownerToken;
+    // console.log(ownerTockens, "aaa");
+
+    // if (ownerTockens) {
+    //   config.headers["ownerAuthorization"] = `Bearer ${ownerTockens}`
+    // }
 
     return config;
   },

@@ -87,14 +87,14 @@ const OwnerNav = () => {
               Profile
             </td>
           </tr>
-          <tr>
+          {/* <tr>
             <td
               className="font-bold cursor-pointer text-2xl mt-6 pt-4"
               onClick={createChat}
             >
               Chat
             </td>
-          </tr>
+          </tr> */}
           <tr>
             <td className="font-bold text-2xl mt-6 pt-4">Notification</td>
           </tr>

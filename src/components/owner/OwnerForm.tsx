@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ownerAuth } from "../../domain/modals/owner";
 import { useNavigate } from "react-router-dom";
 import api, { apiAuth } from "../../servises/api/axios interceptor ";
@@ -7,6 +7,8 @@ const OwnerForm: React.FC = () => {
   const navigate = useNavigate();
   const [userOtp, setUserOtp] = useState<boolean>(false);
   const [inputOtp, setInputOtp] = useState("");
+  const [otpTimer, setOtpTimer] = useState<number>(60)
+  const [resendDisabled, setResendDisabled] = useState<boolean>(false);
   const [owner, setOwner] = useState<ownerAuth>({
     firstname: "",
     lastname: "",
@@ -52,11 +54,12 @@ const OwnerForm: React.FC = () => {
         const { data } = await apiAuth.post("/owner/ownerRegister", {
           ...owner,
         });
-
+ 
         handleOwnerOtp();
       }
     } catch (error) {}
   };
+  
   const handleOwnerOtp = async () => {
     try {
       setUserOtp(true);
@@ -64,6 +67,24 @@ const OwnerForm: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+  
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (userOtp && otpTimer > 0) {
+      timeout = setTimeout(() => {
+        setOtpTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  },[userOtp, otpTimer])
+  const handleResendOtp = () => {
+    setOtpTimer(60); // Reset the timer
+    setResendDisabled(true); 
+    handleOwnerOtp()
   };
 
   const verifyOtp = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -187,13 +208,21 @@ const OwnerForm: React.FC = () => {
               />
             </div>
             <div className="flex justify-center items-center">
+              <p className="text-gray-600 text-sm">
+                Resend OTP in {otpTimer} seconds
+              </p>
+            </div>
+            <div className="flex justify-center items-center">
               <button
                 className="bg-cyan-300 px-3 mt-3 py-2 rounded-lg just "
                 onClick={verifyOtp}
+                disabled ={otpTimer >0}
               >
                 Submit
               </button>
             </div>
+           
+            
           </div>
         </div>
       )}

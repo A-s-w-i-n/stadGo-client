@@ -9,7 +9,7 @@ export interface stadim {
   image: string[];
   discription: string;
   location: string;
-  email: string;
+  email?: string;
   video?: string;
-  id: string;
+  id?: string;
 }
