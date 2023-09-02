@@ -1,29 +1,32 @@
-import React,{useState} from 'react'
-import UserLogin from './userLogin'
-import OwnerLogin from './ownerLogin'
+import React, { useState, useEffect } from "react";
+import UserLogin from "../user/userLogin";
+import OwnerLogin from "../owner/ownerLogin";
+import "../Register/costomColor.css";
 
+function Login() {
+  const [userLogin, showUserLogin] = useState(true);
+  const [ownerLogin, showOwnerLogin] = useState(false);
 
+  useEffect(() => {
+    document.body.classList.add("custom-body-color");
 
-function Login  ()  {
+    return () => {
+      document.body.classList.remove("custom-body-color");
+    };
+  }, []);
 
-    const [userLogin,showUserLogin] = useState(true)
-    const [ownerLogin,showOwnerLogin] = useState(false)
-
-
-
-    const handleshowuser = ()=>{
-        showUserLogin(true)
-        showOwnerLogin(false)
-    }
-    const handleShowOwner =()=>{
-        showOwnerLogin(true)
-        showUserLogin(false)
-    }
+  const handleshowuser = () => {
+    showUserLogin(true);
+    showOwnerLogin(false);
+  };
+  const handleShowOwner = () => {
+    showOwnerLogin(true);
+    showUserLogin(false);
+  };
   return (
-    
-      <div >
-      <div className="flex  justify-center  mt-9   " >
-        <h1 className="font-extrabold text-3xl">LOGIN</h1>
+    <div>
+      <div className="flex  justify-center  mt-9   ">
+        <h1 className="font-extrabold text-3xl text-white   ">LOGIN</h1>
       </div>
 
       <div className="flex justify-center gap-4 ">
@@ -45,12 +48,11 @@ function Login  ()  {
         </button>
       </div>
       <div className="flex justify-center ">
-        {userLogin && <UserLogin/>}
+        {userLogin && <UserLogin />}
         {ownerLogin && <OwnerLogin />}
       </div>
     </div>
-   
-  )
+  );
 }
 
-export default Login
+export default Login;
