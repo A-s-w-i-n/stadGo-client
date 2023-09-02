@@ -5,6 +5,7 @@ import UserNav from "../navbar/userNav";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
+import {GoogleMap,LoadScript,Marker} from '@react-google-maps/api'
 
 import { stadim } from "../../domain/modals/stadium";
 import { userData } from "../../domain/modals/userData";
@@ -12,6 +13,10 @@ import { toast } from "react-toastify";
 const DetaildView: React.FC = () => {
   const [usersPremium, setUserPremium] = useState(false);
   const [checkDetail, setCheckDetail] = useState<userData>();
+  const [stadiumLatLng, setStadiumLatLng] = useState<{ lat: number; lng: number }>({
+    lat: 0, 
+    lng: 0 
+  });
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const navigate = useNavigate();
   const settings = {
@@ -22,6 +27,14 @@ const DetaildView: React.FC = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
+  };
+  const mapStyles = {
+    height: '400px',
+    width: '100%',
+  };
+  const defaultCenter = {
+    lat: 22.8061, 
+    lng: 86.1931, 
   };
   const [carosal, setCarosal] = useState<stadim>();
   const [firstChat, setFirstChat] = useState(true);
@@ -68,12 +81,35 @@ const DetaildView: React.FC = () => {
     }
 
 
-
   useEffect(() => {
     api.post("/fetchUsers", { email }).then((fetchdata) => {
       setCheckDetail(fetchdata.data.userDetail.premium);
     });
   }, []);
+
+  // const fullLocation = `${carosal?.stadiumname} ${carosal?.location}`
+  // const fullLocation = " eden gardens kolkata west bengal "
+  // console.log(fullLocation);
+
+  // useEffect(()=>{
+
+  //   const geoCoder = new google.maps.Geocoder()
+  
+  //   geoCoder.geocode({address :fullLocation},(result,status)=>{
+  //     if(status === "OK" && result!.length>0){
+  //       const location  = result![0].geometry.location
+  //       console.log(location);
+        
+  //       const latitude =location.lat()
+  //       const longitude = location.lng()
+  //       setStadiumLatLng({ lat: latitude, lng: longitude });
+  //     }
+  //   })
+  // },[])
+  // console.log(stadiumLatLng);
+
+  
+  
 
   return (
     <div className="">
@@ -133,6 +169,18 @@ const DetaildView: React.FC = () => {
       >
         {checkDetail ? "START CHAT" : "Buy Premium"}
       </button>
+
+     
+      <div className="mt-6">
+      <GoogleMap
+        mapContainerStyle={mapStyles}
+        zoom={15}   
+        center={defaultCenter}
+      >
+       <Marker position={defaultCenter} />
+      </GoogleMap>
+      </div>
+     
     </div>
   </div>
   );

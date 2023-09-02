@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 const UserSatdiumList = () => {
   const { email }: any = useSelector((state: any) => state.user);
+  const [location, setLocation] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
@@ -16,14 +17,14 @@ const UserSatdiumList = () => {
 
   const fetchStadium = () => {
     api
-    .get("/stadium/fetchStadiumList")
-    .then((stadiumList) => {
-      setStadiumData(stadiumList.data.fetchList);
-    })
-    .catch(() => {});
+      .get("/stadium/fetchStadiumList")
+      .then((stadiumList) => {
+        setStadiumData(stadiumList.data.fetchList);
+      })
+      .catch(() => {});
   };
   useEffect(() => {
-    fetchStadium()
+    fetchStadium();
   }, []);
 
   useEffect(() => {
@@ -33,39 +34,54 @@ const UserSatdiumList = () => {
     setFilteredStadiums(filtered);
   }, [searchTerm, stadiumData]);
 
-  const handleFilter =async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLocationFilter =async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const filter = e.target.selectedOptions;
-    
-    if(filter[0].value == "option1"){
-      console.log(filter[0].value);
-    
-    fetchStadium()
-   }else{
-    
-    
-     setSelectedFilter(filter[0].value)
-     const [minValue, maxValue] = filter[0].value.split(" - ");
-  
-     const firstValue = minValue;
-     const secondValue = maxValue;
-  
-    //  console.log("firstValue", firstValue);
-    //  console.log("secondValue", secondValue);
-  
-     const filterdata =await apiAuth.post("/stadium/stadFilter", {
-       firstValue,
-       secondValue,
-     });
-     setFilteredStadiums(filterdata.data.filter)
-     console.log(filterdata.data.filter);
-   }
-     
-  
-    
 
+    setLocation(filter[0].value);
+    if(filter[0].value == "option1"){
+      fetchStadium();
+
+    }else{
+
+      const stadiumlocationFilter = await api.post('/stadium/stadiumLocationFilter',{location})
+      setFilteredStadiums(stadiumlocationFilter.data.filter)
+      console.log(stadiumlocationFilter.data.filter);
     }
+
+
     
-    // console.log(filter[0].value);
+  };
+  console.log(location);
+
+  const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const filter = e.target.selectedOptions;
+    console.log(filter);
+
+    if (filter[0].value == "option1") {
+      console.log(filter[0].value);
+
+      fetchStadium();
+    } else {
+      setSelectedFilter(filter[0].value);
+      const [minValue, maxValue] = filter[0].value.split(" - ");
+
+      const firstValue = minValue;
+      const secondValue = maxValue;
+
+      //  console.log("firstValue", firstValue);
+      //  console.log("secondValue", secondValue);
+
+      const filterdata = await api.post("/stadium/stadFilter", {
+        firstValue,
+        secondValue,
+      });
+      setFilteredStadiums(filterdata.data.filter);
+      console.log(filterdata.data.filter);
+    }
+  };
+  console.log(stadiumData);
+
+  // console.log(filter[0].value);
 
   return (
     <div>
@@ -73,7 +89,7 @@ const UserSatdiumList = () => {
       <form>
         <div className="relative w-[18rem]  ml-auto">
           <select
-            className="mr-4 px-2 py-1 border rounded-md "
+            className="mr-4  px-2 py-1 border rounded-md "
             onChange={handleFilter}
           >
             <option value="option1">Capacity</option>
@@ -81,6 +97,15 @@ const UserSatdiumList = () => {
             <option value="30000 - 50000">30000 - 50000</option>
             <option value="50000 - 70000">50000 - 70000</option>
             <option value="70000 - 100000">70000 - 100000</option>
+          </select>
+          <select
+            className="mr-4  px-2 py-1 border rounded-md "
+            onChange={handleLocationFilter}
+          >
+            <option value="option1">ALL</option>
+            {stadiumData.map((item) => (
+              <option value={item.location}>{item.location}</option>
+            ))}
           </select>
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
