@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import AdminHome from "./adminHome";
 import { ownerData } from "../../domain/modals/ownerData";
 
@@ -16,7 +16,7 @@ const AdminFetchOwner: React.FC = () => {
     e.preventDefault();
 
     try {
-      const ownerBlock = await api.post("/admin/blockOwner", { id });
+      const ownerBlock = await apiAuth.post("/admin/blockOwner", { id });
 
       console.log(ownerBlock);
     } catch (error) {}
@@ -28,14 +28,14 @@ const AdminFetchOwner: React.FC = () => {
     e.preventDefault();
 
     try {
-      const OwnerUnblock = await api.post("/admin/unBlockOwner", { id });
+      const OwnerUnblock = await apiAuth.post("/admin/unBlockOwner", { id });
 
       console.log(OwnerUnblock);
     } catch (error) {}
   };
 
   useEffect(() => {
-    api
+    apiAuth
       .get("/admin/fetchOwner")
       .then((fetchOwner) => {
         console.log(fetchOwner.data.ownerFetch);

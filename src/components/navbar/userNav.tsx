@@ -59,7 +59,7 @@ const UserNav = () => {
         <table className="p-4 mt-5 ml-8">
           <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4 "
+              className="font-bold text-2xl mt-6 pt-4 cursor-pointer "
               onClick={() => navigate("/userProfile")}
             >
               Profile
@@ -67,7 +67,7 @@ const UserNav = () => {
           </tr>
           <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4"
+              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
               onClick={() => navigate("/Chat")}
             >
               Chat
@@ -75,15 +75,13 @@ const UserNav = () => {
           </tr>
           <tr>
             <td
-              className="font-bold text-2xl mt-6 pt-4"
+              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
               onClick={() => navigate("/stadiumList")}
             >
               Stadium
             </td>
           </tr>
-          <tr>
-            <td className="font-bold text-2xl mt-6 pt-4">Notification</td>
-          </tr>
+        
 
           <tr>
             <td

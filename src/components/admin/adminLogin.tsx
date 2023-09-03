@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin: React.FC = () => {
@@ -25,7 +25,7 @@ const AdminLogin: React.FC = () => {
     e.preventDefault();
 
     try {
-      const { data } = await api.post("/admin/adminLogin", { ...adminLogin });
+      const { data } = await apiAuth.post("/admin/adminLogin", { ...adminLogin });
       if (data) {
         console.log(data);
         const adminToken = data.accessToken;
