@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import UserPremium from "../payment/userPremium";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { userData } from "../../domain/modals/userData";
 import MainPagenav from "../navbar/mainPagenav";
 
@@ -21,17 +21,18 @@ const UserHome: React.FC = () => {
   };
   const emaiId = JSON.parse(localStorage.getItem("user") as string);
   const email = emaiId.LoginCheck.email;
+  console.log(email);
 
   const handleFetchUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-  //   if (checkDetail) {
-  //     setUserPremium(false);
-  //     navigate("/stadiumList");
-  //   } else {
-  //     openPaymentModal();
-  //     setUserPremium(true);
-  //   }
+    //   if (checkDetail) {
+    //     setUserPremium(false);
+    //     navigate("/stadiumList");
+    //   } else {
+    //     openPaymentModal();
+    //     setUserPremium(true);
+    //   }
   };
 
   // const genarateSuccess = (succ : any)=>toast.success(succ,{
@@ -44,6 +45,19 @@ const UserHome: React.FC = () => {
   //     setCheckDetail(fetchdata.data.userDetail.premium);
   //   });
   // }, []);
+
+  const handleUserOrgCheck = async () => {
+    console.log("hiii");
+
+    const { data } = await apiAuth.post("/org/fetchOrg", { email });
+    console.log(data);
+
+    if (data.fetchOrg == null) {
+      navigate("/orgDetail");
+    } else {
+      navigate("/stadiumList");
+    }
+  };
 
   return (
     <div>
@@ -70,10 +84,13 @@ const UserHome: React.FC = () => {
                 </div>
 
                 <div className="absolute bottom-48 mb-30">
-                  <button className="rounded-full fixed bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  bottom-9 font-serif  text-lg" onClick={()=>navigate('/stadiumList')}>
+                  <button
+                    className="rounded-full fixed bg-cyan-300 hover:bg-cyan-300 px-6 py-3 mb-44  bottom-9 font-serif  text-lg"
+                    onClick={handleUserOrgCheck}
+                  >
                     {/* {checkDetail ?  */}
                     Explore
-                     {/* : "Buy Premium"} {""} */}
+                    {/* : "Buy Premium"} {""} */}
                   </button>
                 </div>
               </div>
