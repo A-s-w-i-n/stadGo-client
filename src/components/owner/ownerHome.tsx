@@ -32,9 +32,16 @@ const OwnerHome = () => {
 
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
+    const { data } = await apiAuth.post("/stadium/fetchStadium", { email });
+    console.log(data);
+    
     // if (detailsCheck) {
-      setOnwerPrimium(false);
-      navigate("/owner/stadiumlist");
+      // setOnwerPrimium(false);
+      if(data == undefined){
+        navigate('/stadiumDetails')
+      }else {
+        navigate("/owner/stadiumlist");
+      }
     // } else {
       // openPaymentModal();
       // setOnwerPrimium(true);

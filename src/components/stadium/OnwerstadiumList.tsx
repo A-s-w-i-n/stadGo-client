@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { ownerLogged } from "../../Redux/owner/ownerSlice";
+import Loader from "../loader/loader";
 
 
 const OnwerstadiumList = () => {
   const dispatch = useDispatch();
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [loding,setLoding] = useState<boolean>(true)
   const navigate = useNavigate();
   const [stadiumname,setEditStadiumName] = useState("")
   const [sportstype,setSportsType] = useState("")
@@ -20,6 +22,7 @@ const OnwerstadiumList = () => {
   const [price,setPrice] = useState("")
   const [image,setImage] = useState([""])
   const [discription,setDiscription] =useState("")
+  const [id,setId] = useState("")
 
   const [selectedMainImages, setSelectedMainImages] = useState<{
     [stadiumId: string]: string;
@@ -52,17 +55,12 @@ const OnwerstadiumList = () => {
   const email = emailCheck.email;
 
 
-
-
-  const fetchStadiumList= () =>{
-
- 
-  }
   const fetchData = () => {
     apiAuth
       .post("/stadium/fetchStadium", { email })
       .then((fetchStadium) => {
-        console.log(fetchStadium.data.fetchStadiumData);
+        console.log(fetchStadium.data.fetchStadiumData[0],"gggggggggggggggggggggggg");
+        console.log(fetchStadium.data.fetchStadiumData[0]._id,"gggggggggggggggggggggggg");
         setStadiumData(fetchStadium.data.fetchStadiumData);
         setEditStadiumName(fetchStadium.data.fetchStadiumData.stadiumname);
         setSportsType(fetchStadium.data.fetchStadiumData.sportstype);
@@ -70,24 +68,22 @@ const OnwerstadiumList = () => {
         setToDate(fetchStadium.data.fetchStadiumData.todate);
         setPrice(fetchStadium.data.fetchStadiumData.price);
         setDiscription(fetchStadium.data.fetchStadiumData.discription);
+        setId(fetchStadium.data.fetchStadiumData[0]._id)
       })
       .catch(() => {});
-  };
-
+    };
+    
   useEffect(() => {
     fetchData();
   }, []);
-
-  
-  
-
 const updateStadiumList =async () =>{
-  
-  const data =await apiAuth.post('/stadium/editStadium',{stadiumname,sportstype,fromdate,todate,price,discription,image})
+ 
+  const data =await apiAuth.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
   fetchData()
-console.log(data,"data");
-
+  console.log(data,"data");
+  
   handleModalClose()
+
 
 }
 
@@ -106,6 +102,7 @@ console.log(data,"data");
 
   return (
     <div>
+      {loding&&<Loader/>}
       <OwnerNav />
 
       {stadiumData.map((item) => (

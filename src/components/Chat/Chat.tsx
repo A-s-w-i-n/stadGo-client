@@ -204,7 +204,7 @@ const Chat = (props: role) => {
                                 handleMessageFetch(item._id);
                               }}
                             >
-                              <div className="flex w-8 h-8 mt-3  border   border-black rounded-full  "></div>
+                              <div className="flex w-8 h-8 mt-3  border   border-black rounded-full  "><img className="rounded-2xl" src={item.User?.profileImg} alt="" /></div>
 
                             <div className="flex font-extrabold h-7  font-serif ml-6  ">{item.User?.username}</div>
 

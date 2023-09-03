@@ -4,12 +4,14 @@ import { stadim } from "../../domain/modals/stadium";
 import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import  Loader from '../loader/loader'
 
 const UserSatdiumList = () => {
   const { email }: any = useSelector((state: any) => state.user);
   const [location, setLocation] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
+  const [loading,setLoading] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [filteredStadiums, setFilteredStadiums] =
     useState<stadim[]>(stadiumData);
@@ -20,6 +22,7 @@ const UserSatdiumList = () => {
       .get("/stadium/fetchStadiumList")
       .then((stadiumList) => {
         setStadiumData(stadiumList.data.fetchList);
+        setLoading(false)
       })
       .catch(() => {});
   };
@@ -85,28 +88,31 @@ const UserSatdiumList = () => {
 
   return (
     <div>
+      {<Loader/>&&loading}
       <UserNav />
       <form>
         <div className="relative w-[18rem]  ml-auto">
-          <select
-            className="mr-4  px-2 py-1 border rounded-md "
-            onChange={handleFilter}
-          >
-            <option value="option1">Capacity</option>
-            <option value="10000 - 30000">10000 - 30000</option>
-            <option value="30000 - 50000">30000 - 50000</option>
-            <option value="50000 - 70000">50000 - 70000</option>
-            <option value="70000 - 100000">70000 - 100000</option>
-          </select>
-          <select
-            className="mr-4  px-2 py-1 border rounded-md "
-            onChange={handleLocationFilter}
-          >
-            <option value="option1">ALL</option>
-            {stadiumData.map((item) => (
-              <option value={item.location}>{item.location}</option>
-            ))}
-          </select>
+        <div className="flex items-center">
+  <select
+    className="mr-4 px-2 py-1 border rounded-md"
+    onChange={handleFilter}
+  >
+    <option value="option1">Capacity</option>
+    <option value="10000 - 30000">10000 - 30000</option>
+    <option value="30000 - 50000">30000 - 50000</option>
+    <option value="50000 - 70000">50000 - 70000</option>
+    <option value="70000 - 100000">70000 - 100000</option>
+  </select>
+  <select
+    className="px-2 py-1 border rounded-md"
+    onChange={handleLocationFilter}
+  >
+    <option value="option1">ALL</option>
+    {stadiumData.map((item) => (
+      <option value={item.location}>{item.location}</option>
+    ))}
+  </select>
+</div>
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-gray-500 mt-8 dark:text-gray-400"

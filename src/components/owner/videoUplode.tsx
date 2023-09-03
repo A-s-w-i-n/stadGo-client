@@ -4,6 +4,7 @@ import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 import { stadim } from "../../domain/modals/stadium";
 import OwnerNav from "../navbar/ownerNav";
+import Loader from "../loader/loader";
 
 const VideoUpload = () => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const VideoUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uplodeVideo, setVideoUplode] = useState<string>("");
   const [uplodeVideoModal, setuplodeVideoModal] = useState(false);
+  const [loding,setLoding] = useState<boolean>(false)
+  
 
   const openUplodeVideoModal = () => {
     setuplodeVideoModal(true);
@@ -26,6 +29,7 @@ const VideoUpload = () => {
 
   const uploadVideoToS3 = async (file: File) => {
     console.log("working");
+    
     const s3 = new AWS.S3({
       accessKeyId: import.meta.env.VITE_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_SECRET_ACCESS_KEY,
@@ -39,9 +43,11 @@ const VideoUpload = () => {
     };
 
     try {
+      setLoding(true)
       const response = await s3.upload(params).promise();
       console.log("File uploaded:", response.Location);
       setVideoUplode(response.Location);
+      setLoding(false)
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -52,6 +58,7 @@ const VideoUpload = () => {
       if(selectedFile.type.startsWith('video/')){
 
         uploadVideoToS3(selectedFile);
+        setLoding(true)
       }else{
         console.log("Selected file is not a valid video");
         
@@ -70,6 +77,7 @@ const VideoUpload = () => {
         console.log(result.data.fetchStadiumData[0]._id);
 
         setStadiumInfo(result.data.fetchStadiumData);
+        // setLoding(false)
         // console.log(stadiumInfo[0].video);
     });
   
@@ -102,6 +110,7 @@ useEffect(()=>{
 
   return (
     <div>
+      {loding&&<Loader/>}
       <OwnerNav />
       <div>
         {stadiumInfo.map((item) => (

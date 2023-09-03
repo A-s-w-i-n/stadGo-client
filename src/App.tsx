@@ -17,6 +17,7 @@ import './App.css'
 import AdminHome from './components/admin/adminHome';
 import AdminFetchUser from './components/admin/adminFetchUser';
 import AdminFetchOwner from './components/admin/AdminFetchOwner';
+import AdminDashBord from './components/admin/adminDashBord';
 import OrgDetail from './components/OrgDetails/orgDetail';
 import Stadium from './components/stadium/stadium';
 import OnwerstadiumList from './components/stadium/OnwerstadiumList';
@@ -25,6 +26,8 @@ import OwnerProtectRouter from './pages/ProtectRouter/ownerProtectRouter';
 import UserSatdiumList from './components/stadium/userSatdiumList';
 import Paypal from './components/payment/ownerPremium';
 import Chat from './components/Chat/Chat';
+import Loader from './components/loader/loader';
+import SportsNews from './pages/userPage/sportsNews';
 function App() {
   
 
@@ -32,7 +35,6 @@ function App() {
     <>
     <Router>
       <Routes>
-        
         <Route path='/' element={<UserOpening/>}/>
         <Route path='/adminLogin' element={<AdminLogin/>}/>
         <Route path='/adminhome' element={<AdminHome/>}/>
@@ -42,6 +44,7 @@ function App() {
         <Route path='/admin/fetchUser' element={<AdminFetchUser/>}/>
         <Route path='/admin/fetchOwner' element ={<AdminFetchOwner/>}/>
         <Route path='/admin/fetchStadium' element={<AdminFetchStadium/>}/>
+        <Route path='/admin/adminDashboard' element={<AdminDashBord/>}/>
         <Route path='/Login' element={<Login/>}/>
         <Route path='/orgDetail' element={<UserProtectedRouter><OrgDetail/></UserProtectedRouter>}/>
         <Route path='/stadiumDetails' element={<OwnerProtectRouter><Stadium/></OwnerProtectRouter>}/>
@@ -54,6 +57,8 @@ function App() {
         <Route path='/owner/videoUplode' element={<OwnerProtectRouter><VideoUplode/></OwnerProtectRouter>}/>
         <Route path='/Chat' element={<Chat role={'user'}></Chat>}/>
         <Route path='/owner/Chat' element={<Chat role={'owner'}></Chat>}/>
+        <Route path='/loading'element={<Loader/>} />
+        <Route path='/news' element={<SportsNews/>}/>
       </Routes>
     </Router>
     </>

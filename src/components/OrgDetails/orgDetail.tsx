@@ -38,8 +38,8 @@ const OrgDetails: React.FC = () => {
         });
 
         if (data) {
-          api.post("/chat/accessChat", userId);
-          navigate("/owner/stadiumlist");
+          // api.post("/chat/accessChat", userId);
+          navigate("/stadiumList");
         }
       }
     } catch (error) {}

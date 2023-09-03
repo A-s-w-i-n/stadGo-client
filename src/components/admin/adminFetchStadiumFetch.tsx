@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import AdminHome from "./adminHome";
 import { stadim } from "../../domain/modals/stadium";
 
@@ -10,7 +10,7 @@ const AdminFetchStadium: React.FC = () => {
   const [currentPage, setCurrentpage] = useState<number>(1);
 
   useEffect(() => {
-    api
+    apiAuth
       .get("/stadium/fetchStadiumList")
       .then((fetchOwner) => {
         console.log(fetchOwner.data.fetchList);

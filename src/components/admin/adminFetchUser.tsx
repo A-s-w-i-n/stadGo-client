@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../servises/api/axios interceptor ";
+import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import AdminHome from "./adminHome";
 import { userData } from "../../domain/modals/userData";
 
@@ -15,7 +15,7 @@ const AdminFetchUser: React.FC = () => {
     e.preventDefault();
 
     try {
-      const userBlock = await api.post("/admin/blockUser", { id });
+      const userBlock = await apiAuth.post("/admin/blockUser", { id });
 
       console.log(userBlock);
     } catch (error) {}
@@ -27,13 +27,13 @@ const AdminFetchUser: React.FC = () => {
     e.preventDefault();
 
     try {
-      const UserUnblock = await api.post("/admin/unBlockUser", { id });
+      const UserUnblock = await apiAuth.post("/admin/unBlockUser", { id });
 
       console.log(UserUnblock);
     } catch (error) {}
   };
   useEffect(() => {
-    api
+    apiAuth
       .get("/admin/fetchUser")
       .then((fetchUser) => {
         console.log("fdsfsdfdsf");

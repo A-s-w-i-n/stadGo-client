@@ -7,12 +7,15 @@ import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 import {GoogleMap,LoadScript,Marker} from '@react-google-maps/api'
 
+
 import { stadim } from "../../domain/modals/stadium";
 import { userData } from "../../domain/modals/userData";
 import { toast } from "react-toastify";
+import Loader from "../loader/loader";
 const DetaildView: React.FC = () => {
   const [usersPremium, setUserPremium] = useState(false);
   const [checkDetail, setCheckDetail] = useState<userData>();
+  const [loding,setLoding] = useState<boolean>(true)
   const [stadiumLatLng, setStadiumLatLng] = useState<{ lat: number; lng: number }>({
     lat: 0, 
     lng: 0 
@@ -49,6 +52,7 @@ const DetaildView: React.FC = () => {
     if (id) {
       api.post("/stadium/detaildView", { id }).then((result) => {
         setCarosal(result.data.fetchDetails);
+        setLoding(false)
       });
     }
   }, []);
@@ -113,6 +117,7 @@ const DetaildView: React.FC = () => {
 
   return (
     <div className="">
+      {loding&&<Loader/>}
     <UserNav />
     <div className="flex w-full space-x-4 mt-8">
       <div className="flex-1">
