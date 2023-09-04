@@ -5,7 +5,7 @@ import api, { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import  Loader from '../loader/loader'
-
+import {FiSearch}  from 'react-icons/fi'
 const UserSatdiumList = () => {
   const { email }: any = useSelector((state: any) => state.user);
   const [location, setLocation] = useState<string>("");
@@ -70,10 +70,6 @@ const UserSatdiumList = () => {
 
       const firstValue = minValue;
       const secondValue = maxValue;
-
-      //  console.log("firstValue", firstValue);
-      //  console.log("secondValue", secondValue);
-
       const filterdata = await api.post("/stadium/stadFilter", {
         firstValue,
         secondValue,
@@ -87,11 +83,11 @@ const UserSatdiumList = () => {
   // console.log(filter[0].value);
 
   return (
-    <div>
+    <div className=''>
       {<Loader/>&&loading}
       <UserNav />
       <form>
-        <div className="relative w-[18rem]  ml-auto">
+        <div className="relative w-full  p-2 flex justify-between items-end ">
         <div className="flex items-center">
   <select
     className="mr-4 px-2 py-1 border rounded-md"
@@ -113,31 +109,19 @@ const UserSatdiumList = () => {
     ))}
   </select>
 </div>
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-gray-500 mt-8 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
-          </div>
+<div className="w-100 h-10  flex justify-end items-center">
+  <FiSearch/>
           <input
             type="search"
             id="default-search"
-            className="block w-full p-4 pl-10 text-sm  text-black shadow-2xl rounded-lg  focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-[20rem] h-10 p-4  text-sm  text-black shadow-2xl rounded-lg  focus:ring-blue-500 focus:border-blue-500  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search Stadiums"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-          />
+            />
+
+</div>
+          
         </div>
       </form>
       <div className="flex   flex-wrap justify-center mt-5 md:ml-10 md:mr-10">

@@ -7,7 +7,9 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { ownerLogged } from "../../Redux/owner/ownerSlice";
 import Loader from "../loader/loader";
-
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import Slider from "react-slick";
 
 const OnwerstadiumList = () => {
   const dispatch = useDispatch();
@@ -48,7 +50,15 @@ const OnwerstadiumList = () => {
   // }
 
 
-  
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
 
   const emailId = JSON.parse(localStorage.getItem("owner") as string);
   const emailCheck = emailId.OwnerLoginCheck;
@@ -56,7 +66,7 @@ const OnwerstadiumList = () => {
 
 
   const fetchData = () => {
-    apiAuth
+    api
       .post("/stadium/fetchStadium", { email })
       .then((fetchStadium) => {
         console.log(fetchStadium.data.fetchStadiumData[0],"gggggggggggggggggggggggg");
@@ -78,13 +88,9 @@ const OnwerstadiumList = () => {
   }, []);
 const updateStadiumList =async () =>{
  
-  const data =await apiAuth.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
+  const data =await api.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
   fetchData()
-  console.log(data,"data");
-  
   handleModalClose()
-
-
 }
 
 
@@ -106,32 +112,38 @@ const updateStadiumList =async () =>{
       <OwnerNav />
 
       {stadiumData.map((item) => (
-        <div className="  h-100 border-spacing-2 border border-black mt-4 relative flex w-11/12 ml-16 max-w-[96rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-          <div className="relative border border-black    m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-xl bg-white bg-clip-border text-gray-700">
-            <div className="flex flex-row  ">
-              {item.image.slice(0, 3).map((imageSrc, i) => (
-                <img
-                  key={i}
-                  className={`object-cover transition duration-300 ease-in-out hover:scale-110 rounded-lg mt-7 w-36 h-32  md:w-0 sm:w-0 md:h-0 lg:w-32 lg:h-32 ml-7 ${
-                    selectedMainImages[item.maxcapacity] === imageSrc
-                      ? "border border-blue-500"
-                      : ""
-                  }`}
-                  src={imageSrc}
-                  alt=""
-                  onClick={() =>
-                    handleMainImageClick(item.maxcapacity, imageSrc)
-                  }
-                />
-              ))}
-            </div>
-            <img
-              className="object-cover mt-14   w-full h-72 mb-7 xs:w-0 rounded-lg "
-              src={
-                selectedMainImages[item.maxcapacity] || item.image[2]
-              } /* Use selected image or default */
-              alt=""
-            />
+        <div className="  h-100  border border-black mt-4 relative flex w-11/12 ml-16 max-w-[96rem] flex-row rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+          <div className="relative border  border-black   m-0 w-2/5 shrink-0 overflow-hidden rounded-xl rounded-r-xl bg-white bg-clip-border text-gray-700">
+           
+            <Slider {...settings}>
+              {item.image && (
+                <Slider {...settings}>
+                  <div>
+                    <img
+                      src={item.image[0]}
+                      alt=""
+                      className="w-full  h-[29.8rem] rounded-md"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src={item.image[1]}
+                      alt=""
+                      className="w-full  h-[29.8rem]  rounded-md"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src={item.image[2]}
+                      className="w-full  h-[29.8rem]    rounded-md"
+                    />
+                  </div>
+                </Slider>
+              )}
+            {/* Other slider items */}
+          </Slider>
+            
+            
           </div>
           <div className="p-6 ml-16">
             <h4 className="mb-2  block font-sans text-5xl text-center font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">

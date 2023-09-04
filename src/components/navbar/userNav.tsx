@@ -9,6 +9,7 @@ import api from "../../servises/api/axios interceptor ";
 const UserNav = () => {
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
+  const [chatExist,setChatExist] = useState()
   const [firstChat, setFirstChat] = useState(true);
   const toggleSidebar = () => {
     setShowSidebar((prevShowSidebar) => !prevShowSidebar);

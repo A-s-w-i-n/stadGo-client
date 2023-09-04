@@ -49,7 +49,7 @@ const UserHome: React.FC = () => {
   const handleUserOrgCheck = async () => {
     console.log("hiii");
 
-    const { data } = await apiAuth.post("/org/fetchOrg", { email });
+    const { data } = await api.post("/org/fetchOrg", { email });
     console.log(data);
 
     if (data.fetchOrg == null) {

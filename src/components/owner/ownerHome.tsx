@@ -32,7 +32,7 @@ const OwnerHome = () => {
 
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { data } = await apiAuth.post("/stadium/fetchStadium", { email });
+    const { data } = await api.post("/stadium/fetchStadium", { email });
     console.log(data);
     
     // if (detailsCheck) {

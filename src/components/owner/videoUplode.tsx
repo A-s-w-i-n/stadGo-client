@@ -73,7 +73,7 @@ const VideoUpload = () => {
   const fetchVideo=()=>{
 
     
-      apiAuth.post("/stadium/fetchStadium", { email }).then((result) => {
+      api.post("/stadium/fetchStadium", { email }).then((result) => {
         console.log(result.data.fetchStadiumData[0]._id);
 
         setStadiumInfo(result.data.fetchStadiumData);
@@ -92,7 +92,7 @@ useEffect(()=>{
     handleUpload();
     const id = stadiumInfo[0]._id;
     if (uplodeVideo) {
-      const uplode = await apiAuth.post("/owner/videoUplode", {
+      const uplode = await api.post("/owner/videoUplode", {
         uplodeVideo,
         id,
       });

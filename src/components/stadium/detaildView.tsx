@@ -15,6 +15,7 @@ import Loader from "../loader/loader";
 const DetaildView: React.FC = () => {
   const [usersPremium, setUserPremium] = useState(false);
   const [checkDetail, setCheckDetail] = useState<userData>();
+  const [chatExist,setChatExist] = useState()
   const [loding,setLoding] = useState<boolean>(true)
   const [stadiumLatLng, setStadiumLatLng] = useState<{ lat: number; lng: number }>({
     lat: 0, 
@@ -47,18 +48,21 @@ const DetaildView: React.FC = () => {
   const userId = user.LoginCheck._id;
 
   useEffect(() => {
-    console.log(id);
-
     if (id) {
       api.post("/stadium/detaildView", { id }).then((result) => {
         setCarosal(result.data.fetchDetails);
+        console.log(result.data.fetchDetails._id);
         setLoding(false)
       });
     }
   }, []);
-  const ownerId = carosal?.id;
-  const image = carosal?.image;
 
+  // const ownerId = 
+
+  const ownerId = carosal?.id;
+  
+  const image = carosal?.image;
+  
   const createChat = () => {
     api.post("/chat/accessChat", { ownerId, userId }).then((result) => {
       if (result) {
@@ -67,29 +71,46 @@ const DetaildView: React.FC = () => {
       }
     });
   };
-  const emaiId = JSON.parse(localStorage.getItem("user") as string);
-  const email = emaiId.LoginCheck.email;
-  const openPaymentModal = () => {
-    setIsPaymentModalOpen(true);
-  };
-  const closePaymentModal = () => {
-    setIsPaymentModalOpen(false);
-  };
+  
+  console.log(ownerId,"aaaaaaaaaaaa");
+  console.log(userId,"Aaaaa");
+  
 
-        if (checkDetail) {
+  if(userId && ownerId){
+    const chatRoomExist = async () =>{
+     const {data} = await api.post('/chat/charRoomExist',{userId,ownerId})
+     setChatExist(data.exist)
+     
+     useEffect(()=>{
+       chatRoomExist()
+     },[])
+    }
+  }
+
+  // const emaiId = JSON.parse(localStorage.getItem("user") as string);
+  // const email = emaiId.LoginCheck.email;
+  // const openPaymentModal = () => {
+  //   setIsPaymentModalOpen(true);
+  // };
+  // const closePaymentModal = () => {
+  //   setIsPaymentModalOpen(false);
+  // };
+
+        // if (checkDetail) {
       // setUserPremium(false);
       // navigate("/Chat");
-    } else {
+    // } else {
       // openPaymentModal();
       // setUserPremium(true);
-    }
+    // }
 
 
-  useEffect(() => {
-    api.post("/fetchUsers", { email }).then((fetchdata) => {
-      setCheckDetail(fetchdata.data.userDetail.premium);
-    });
-  }, []);
+  // useEffect(() => {
+  //   chatRoomExist
+  //   api.post("/fetchUsers", { email }).then((fetchdata) => {
+  //     // setCheckDetail(fetchdata.data.userDetail.premium);
+  //   });
+  // }, [chatRoomExist]);
 
   // const fullLocation = `${carosal?.stadiumname} ${carosal?.location}`
   // const fullLocation = " eden gardens kolkata west bengal "
@@ -166,14 +187,21 @@ const DetaildView: React.FC = () => {
       </div>
       <div className="text-lg mt-2">{carosal?.discription}</div>
       {/* Other info */}
+      {chatExist == null ?
+      <button className="mt-4 py-2 px-4 rounded-lg bg-blue-500 text-white">
+        Start Chat
+      </button> :
+      
       <button
         className={`mt-4 py-2 px-4 rounded-lg ${
-          checkDetail ? "bg-blue-500 text-white" : "bg-green-500 text-white"
+          checkDetail ?  "bg-blue-500 text-white" : "bg-green-500 text-white"
         }`}
         onClick={createChat}
       >
-        {checkDetail ? "START CHAT" : "Buy Premium"}
+        Countinue Chat
       </button>
+      }
+        {/* {chatExist == null ? "START CHAT" : "Continue Chat"} */}
 
      
       <div className="mt-6">

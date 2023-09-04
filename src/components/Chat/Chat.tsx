@@ -139,12 +139,12 @@ const Chat = (props: role) => {
 
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-[41rem] flex flex-col">
       <UserNav />
 
-      <div className="mt-32 w-full">
-        <div className="container mx-auto mt-[-128px]">
-          <div className="py-6 h-screen">
+      <div className="mt-32  w-full">
+        <div className="container mx-auto   mt-[-128px]">
+          <div className="fixed ml-4 h-[36rem] w-[78rem]">
             
             <div className="flex border border-gray-300 rounded shadow-lg h-full">
               {/* Left */}
