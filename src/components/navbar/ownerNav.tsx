@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Icons } from "react-toastify";
+// import { Icons } from "react-toastify";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+// import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useSelector } from "react-redux";
 
 const OwnerNav = () => {
@@ -21,18 +21,18 @@ const OwnerNav = () => {
 
     navigate("/login");
   };
-  const { userId }: any = useSelector((state: any) => state.user);
+  // const { userId }: any = useSelector((state: any) => state.user);
   const { ownerId }: any = useSelector((state: any) => state.owner);
   console.log(ownerId);
 
-  const createChat = () => {
-    apiAuth.post("/chat/accessChat", { ownerId, userId }).then((result) => {
-      if (result) {
-        navigate("/owner/Chat");
-        // setFirstChat(false)
-      }
-    });
-  };
+  // const createChat = () => {
+  //   apiAuth.post("/chat/accessChat", { ownerId, userId }).then((result) => {
+  //     if (result) {
+  //       navigate("/owner/Chat");
+  //       // setFirstChat(false)
+  //     }
+  //   });
+  // };
   const toggleSidebar = () => {
     setShowSidebar((prevShowSidebar) => !prevShowSidebar);
   };
@@ -103,7 +103,7 @@ const OwnerNav = () => {
               className="font-bold text-2xl mt-6 pt-4"
               onClick={() => navigate("/owner/Chat")}
             >
-              chat
+              Chat
             </td>
           </tr>
           {/* <tr>
@@ -114,7 +114,15 @@ const OwnerNav = () => {
               className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
               onClick={() => navigate("/owner/videoUplode")}
             >
-              uplode video
+              Uplode Video
+            </td>
+          </tr>
+          <tr>
+            <td
+              className="font-bold text-2xl mt-6 pt-4 cursor-pointer"
+              onClick={() => navigate("/owner/ownerDashBoard")}
+            >
+              Dash Board
             </td>
           </tr>
           <tr>

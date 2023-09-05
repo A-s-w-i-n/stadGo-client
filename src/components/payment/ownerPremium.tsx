@@ -1,10 +1,10 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { stadim } from "../../domain/modals/stadium";
+// import { stadim } from "../../domain/modals/stadium";
 import { useNavigate } from "react-router-dom";
 // import { paypalProps } from '../../domain/modals/paypal'
 import { ToastContainer, toast } from "react-toastify";
 import React from "react";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 
 const Paypal: React.FC = () => {
   const navigate = useNavigate();

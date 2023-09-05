@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import api from "../../servises/api/axios interceptor ";
+// import { useDispatch, useSelector } from "react-redux";
+// import api from "../../servises/api/axios interceptor ";
 // import { userLogout } from '../../Redux/user/userSlice';
 
 // const dispatch = useDispatch()
 const UserNav = () => {
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
-  const [chatExist,setChatExist] = useState()
-  const [firstChat, setFirstChat] = useState(true);
+  // const [chatExist,setChatExist] = useState()
+  // const [firstChat, setFirstChat] = useState(true);
   const toggleSidebar = () => {
     setShowSidebar((prevShowSidebar) => !prevShowSidebar);
   };

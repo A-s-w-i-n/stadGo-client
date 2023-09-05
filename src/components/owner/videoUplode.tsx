@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import AWS from "aws-sdk";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
-import { useNavigate } from "react-router-dom";
+import api from "../../servises/api/axios interceptor ";
+// import { useNavigate } from "react-router-dom";
 import { stadim } from "../../domain/modals/stadium";
 import OwnerNav from "../navbar/ownerNav";
 import Loader from "../loader/loader";
 
 const VideoUpload = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [stadiumInfo, setStadiumInfo] = useState<stadim[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uplodeVideo, setVideoUplode] = useState<string>("");
@@ -21,9 +21,15 @@ const VideoUpload = () => {
   const closeUplodeVideoModal = () => {
     setuplodeVideoModal(false);
   };
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0]);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+   
+    if (e.target.files && e.target.files.length>0 ) {
+      setLoding(true)
+      console.log("jiii");
+      
+      setSelectedFile(e.target.files[0]);
+      setLoding(false)
+     
     }
   };
 
@@ -52,6 +58,7 @@ const VideoUpload = () => {
       console.error("Error uploading file:", error);
     }
   };
+console.log(selectedFile);
 
   const handleUpload = () => {
     if (selectedFile) {
@@ -114,26 +121,25 @@ useEffect(()=>{
       <OwnerNav />
       <div>
         {stadiumInfo.map((item) => (
-          <div className=" flex flex-wrap ">
-            <div className="w-full ml-[6rem] sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4  rounded overflow-hidden shadow-lg">
+          <div className="flex w-full h-full  ">
+            <div className="  w-[30rem] ml-[6rem]      rounded overflow-hidden shadow-lg">
               <img
                 className="w-full rounded-2xl"
                 src={item.image[0]}
                 alt="Sunset in the mountains"
               />
               <video
-                className="grid rounded-2xl mt-9"
+                className="grid w-full rounded-2xl mt-9"
                 controls
                 width="400"
                 src={item.video}
-              />
-
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl text-center mb-2">
-                  {item.stadiumname}
+                />
                 </div>
-              </div>
-              <div className="flex items-center justify-center px-6 pt-4 pb-2">
+<div className="flex">
+              <div className="flex justify-betwee items-center    px-6 py-4">
+                <div className="font-bold  text-xl text-center mb-2">
+                  {item.stadiumname}
+              <div className=" items-center justify-center px-6 pt-4 pb-5">
                 <button
                   className="bg-cyan-400  px-3 py-2 rounded-2xl"
                   onClick={openUplodeVideoModal}
@@ -141,7 +147,9 @@ useEffect(()=>{
                   UPLODE
                 </button>
               </div>
-            </div>
+                </div>
+              </div>
+              </div>
           </div>
         ))}
         {uplodeVideoModal && (
@@ -173,14 +181,14 @@ useEffect(()=>{
                       drag and drop
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      SVG, PNG, JPG or GIF (MAX. 800x400px)
+                     
                     </p>
                   </div>
                   <input
                     id="dropzone-file"
                     type="file"
                     className="hidden"
-                    onClick={handleFileChange}
+                    onChange={handleFileChange}
                   />
                 </label>
               </div>

@@ -1,7 +1,7 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import  {  useState } from 'react'
 import UserNav from '../../components/navbar/userNav';
-import api, { apiAuth } from '../../servises/api/axios interceptor ';
+import  { apiAuth } from '../../servises/api/axios interceptor ';
 
 const SportsNews = () => {
 
@@ -31,12 +31,12 @@ console.log(news,"aa");
 
 
 // Schedule the initial API call and set the time interval
-const apiCallInterval = 24 * 60 * 60 * 1000 / maxApiCalls; // 24 hours divided by maxApiCalls
+// const apiCallInterval = 24 * 60 * 60 * 1000 / maxApiCalls; // 24 hours divided by maxApiCalls
 fetchingNews(); // Initial call
-const intervalId = setInterval(fetchingNews, apiCallInterval);
+// const intervalId = setInterval(fetchingNews, apiCallInterval);
 
 
-const result = apiAuth.post('/stadium/news')
+// const result = apiAuth.post('/stadium/news')
     
   return (
     <div>
@@ -44,7 +44,7 @@ const result = apiAuth.post('/stadium/news')
       <div className='w-full h-screen'>
 <button className='bg-white w-10' onClick={fetchingNews}>news</button>
 
-{news.map((item)=>(
+{news.map(()=>(
     <div className="relative flex max-w-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
   <div className="relative m-0 overflow-hidden rounded-none bg-transparent bg-clip-border text-gray-700 shadow-none">
     <img

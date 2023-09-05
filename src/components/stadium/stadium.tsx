@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import MainPagenav from "../navbar/mainPagenav";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { stadim } from "../../domain/modals/stadium";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

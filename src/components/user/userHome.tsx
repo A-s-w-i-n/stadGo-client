@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import UserPremium from "../payment/userPremium";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+// import UserPremium from "../payment/userPremium";
+import api from "../../servises/api/axios interceptor ";
 import { userData } from "../../domain/modals/userData";
 import MainPagenav from "../navbar/mainPagenav";
 
 const UserHome: React.FC = () => {
   const navigate = useNavigate();
-  const [usersPremium, setUserPremium] = useState(false);
-  const [checkDetail, setCheckDetail] = useState<userData>();
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  // const [usersPremium, setUserPremium] = useState(false);
+  // const [checkDetail, setCheckDetail] = useState<userData>();
+  // const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
-  const openPaymentModal = () => {
-    setIsPaymentModalOpen(true);
-  };
+  // const openPaymentModal = () => {
+  //   setIsPaymentModalOpen(true);
+  // };
 
-  const closePaymentModal = () => {
-    setIsPaymentModalOpen(false);
-  };
+  // const closePaymentModal = () => {
+  //   setIsPaymentModalOpen(false);
+  // };
   const emaiId = JSON.parse(localStorage.getItem("user") as string);
   const email = emaiId.LoginCheck.email;
   console.log(email);

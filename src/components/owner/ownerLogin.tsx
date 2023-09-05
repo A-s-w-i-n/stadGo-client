@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useDispatch } from "react-redux";
 import { ownerLogged } from "../../Redux/owner/ownerSlice";
 

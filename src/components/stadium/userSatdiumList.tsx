@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import UserNav from "../navbar/userNav";
 import { stadim } from "../../domain/modals/stadium";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import api from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import  Loader from '../loader/loader'
 import {FiSearch}  from 'react-icons/fi'
 const UserSatdiumList = () => {
-  const { email }: any = useSelector((state: any) => state.user);
+  // const { email }: any = useSelector((state: any) => state.user);
   const [location, setLocation] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("");
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
@@ -16,6 +16,8 @@ const UserSatdiumList = () => {
   const [filteredStadiums, setFilteredStadiums] =
     useState<stadim[]>(stadiumData);
   const navigate = useNavigate();
+  console.log(selectedFilter);
+  
 
   const fetchStadium = () => {
     api
@@ -26,35 +28,27 @@ const UserSatdiumList = () => {
       })
       .catch(() => {});
   };
-  useEffect(() => {
-    fetchStadium();
-  }, []);
-
+  
   useEffect(() => {
     const filtered = stadiumData.filter((item) =>
-      item.stadiumname.toLowerCase().includes(searchTerm.toLowerCase())
+    item.stadiumname.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredStadiums(filtered);
   }, [searchTerm, stadiumData]);
-
+  useEffect(() => {
+    fetchStadium();
+  }, []);
   const handleLocationFilter =async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const filter = e.target.selectedOptions;
-
     setLocation(filter[0].value);
     if(filter[0].value == "option1"){
       fetchStadium();
-
     }else{
-
       const stadiumlocationFilter = await api.post('/stadium/stadiumLocationFilter',{location})
       setFilteredStadiums(stadiumlocationFilter.data.filter)
       console.log(stadiumlocationFilter.data.filter);
     }
-
-
-    
   };
-  console.log(location);
 
   const handleFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const filter = e.target.selectedOptions;
@@ -78,7 +72,6 @@ const UserSatdiumList = () => {
       console.log(filterdata.data.filter);
     }
   };
-  console.log(stadiumData);
 
   // console.log(filter[0].value);
 
@@ -125,8 +118,8 @@ const UserSatdiumList = () => {
         </div>
       </form>
       <div className="flex   flex-wrap justify-center mt-5 md:ml-10 md:mr-10">
-        {filteredStadiums.length > 0 ? (
-          filteredStadiums.map((item) => (
+        {filteredStadiums?.length > 0 ? (
+          filteredStadiums?.map((item) => (
             <div className="relative  w-96 mx-4 my-6 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className="relative  h-40 overflow-hidden rounded-t-xl bg-white bg-clip-border text-gray-700 shadow-lg">
                 <img

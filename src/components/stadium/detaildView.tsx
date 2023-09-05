@@ -1,27 +1,27 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../servises/api/axios interceptor ";
 import UserNav from "../navbar/userNav";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
-import {GoogleMap,LoadScript,Marker} from '@react-google-maps/api'
+import {GoogleMap,Marker} from '@react-google-maps/api'
 
 
 import { stadim } from "../../domain/modals/stadium";
-import { userData } from "../../domain/modals/userData";
-import { toast } from "react-toastify";
+// import { userData } from "../../domain/modals/userData";
+// import { toast } from "react-toastify";
 import Loader from "../loader/loader";
 const DetaildView: React.FC = () => {
-  const [usersPremium, setUserPremium] = useState(false);
-  const [checkDetail, setCheckDetail] = useState<userData>();
+  // const [usersPremium, setUserPremium] = useState(false);
+  // const [checkDetail, setCheckDetail] = useState<userData>();
   const [chatExist,setChatExist] = useState()
   const [loding,setLoding] = useState<boolean>(true)
-  const [stadiumLatLng, setStadiumLatLng] = useState<{ lat: number; lng: number }>({
-    lat: 0, 
-    lng: 0 
-  });
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  // const [stadiumLatLng, setStadiumLatLng] = useState<{ lat: number; lng: number }>({
+  //   lat: 0, 
+  //   lng: 0 
+  // });
+  // const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const navigate = useNavigate();
   const settings = {
     dots: true,
@@ -37,16 +37,20 @@ const DetaildView: React.FC = () => {
     width: '100%',
   };
   const defaultCenter = {
-    lat: 22.8061, 
-    lng: 86.1931, 
+     lat: 22.8061, 
+    lng: 86.1931,
   };
   const [carosal, setCarosal] = useState<stadim>();
-  const [firstChat, setFirstChat] = useState(true);
+  // const [firstChat, setFirstChat] = useState(true);
   const { id } = useParams();
 
   const user = JSON.parse(localStorage.getItem("user") as string);
   const userId = user.LoginCheck._id;
 
+  
+  const ownerId = carosal?._id
+  const ownerid =carosal?.id
+  console.log(ownerId," ",ownerid);
   useEffect(() => {
     if (id) {
       api.post("/stadium/detaildView", { id }).then((result) => {
@@ -55,32 +59,43 @@ const DetaildView: React.FC = () => {
         setLoding(false)
       });
     }
+    ownerUserInfo()
   }, []);
+  const ownerUserInfo = async () =>{
+    let count = 0
+    console.log(ownerid,'ffff');
+    
+      if(ownerid&&userId){
+        count ++
 
-  // const ownerId = 
+        
+      const userInfos =await api.post('/owner/userList',{userId,ownerid})
+      console.log(userInfos);
+      
+    }
+    
+  }
+  useEffect(()=>{
+    ownerUserInfo()
+  },[ownerid])
 
-  const ownerId = carosal?.id;
+
   
   const image = carosal?.image;
   
   const createChat = () => {
-    api.post("/chat/accessChat", { ownerId, userId }).then((result) => {
+    api.post("/chat/accessChat", { ownerid, userId }).then((result) => {
       if (result) {
         navigate("/Chat");
-        setFirstChat(false);
+        // setFirstChat(false);
       }
     });
   };
-  
-  console.log(ownerId,"aaaaaaaaaaaa");
-  console.log(userId,"Aaaaa");
-  
-
-  if(userId && ownerId){
+  if(userId && ownerid){
     const chatRoomExist = async () =>{
-     const {data} = await api.post('/chat/charRoomExist',{userId,ownerId})
+     const {data} = await api.post('/chat/charRoomExist',{userId,ownerid})
      setChatExist(data.exist)
-     
+
      useEffect(()=>{
        chatRoomExist()
      },[])
@@ -194,7 +209,7 @@ const DetaildView: React.FC = () => {
       
       <button
         className={`mt-4 py-2 px-4 rounded-lg ${
-          checkDetail ?  "bg-blue-500 text-white" : "bg-green-500 text-white"
+             "bg-blue-500 text-white"
         }`}
         onClick={createChat}
       >

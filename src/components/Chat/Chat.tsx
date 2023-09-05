@@ -4,7 +4,7 @@ import UserNav from "../navbar/userNav";
 import io from "socket.io-client";
 import { AiOutlineSend } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Chats, message } from "../../domain/modals/chat";
 
@@ -19,13 +19,12 @@ const Chat = (props: role) => {
   const selectChat = (user: Chats) => {
     setSelcetUser(user);
   };
-  const navigate = useNavigate();
   // const [chat, setChat] = useState("");
   const [message, setMessage] = useState<message[]>([]);
   const [chats, setChats] = useState<Chats[]>([]);
   const { userId }: any = useSelector((state: any) => state.user);
   const { ownerId }: any = useSelector((state: any) => state.owner);
-  const [username, setUsername] = useState("");
+  // const [username, setUsername] = useState("");
   const [ownername, setOwnername] = useState("");
   const [chatId, setChatId] = useState("");
   const [newMessage, setNewMessages] = useState("");
@@ -34,6 +33,11 @@ const Chat = (props: role) => {
   const currentRole = props.role;
   const [searchQuery, setSearchQuery] = useState("");
   console.log(chatId, "chatId");
+
+  console.log(selectUser);
+  console.log(ownername);
+  
+  
 
   useEffect(() => {
     socket.emit("setup", currentId);
@@ -47,12 +51,12 @@ const Chat = (props: role) => {
     setSearchQuery(e.target.value);
   };
 
-  const filteredChats = chats.filter((chat) => {
-    const ownerName = chat.Owner?.ownername || ""; // Default to an empty string if ownername is undefined
+  const filteredChats = chats.filter((chat : any) => {
+    const ownerName = chat.Owner?.ownername ; // Default to an empty string if ownername is undefined
     return ownerName.toLowerCase().includes(searchQuery.toLowerCase());
   });
-  const filteredChatsUser = chats.filter((chat) => {
-    const username = chat.User?.username || ""; // Default to an empty string if username is undefined
+  const filteredChatsUser = chats.filter((chat :any) => {
+    const username = chat.User?.username ; // Default to an empty string if username is undefined
     return username.toLowerCase().includes(searchQuery.toLowerCase());
   });
   useEffect(() => {
@@ -168,7 +172,7 @@ const Chat = (props: role) => {
                 {/* Contacts */}
                 <div className="bg-gray-300 overflow-auto flex-1">
                   {props.role === "user"
-                    ? filteredChats?.map((item) => (
+                    ? filteredChats?.map((item:any) => (
                         <div>
                           <div className=" flex w-full  bg-slate-100  list-none mt-4 h-14  border">
                             <div className="flex w-8 h-8 mt-3 ml-1 border  border-black rounded-full  "></div>
@@ -192,7 +196,7 @@ const Chat = (props: role) => {
                           </div>
                         </div>
                       ))
-                    : filteredChatsUser?.map((item) => (
+                    : filteredChatsUser?.map((item : any) => (
                         <div>
                           <div className="flex w-full  bg-slate-100  list-none mt-4 h-14  border">
                             <div

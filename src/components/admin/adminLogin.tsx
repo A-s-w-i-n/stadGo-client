@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin: React.FC = () => {

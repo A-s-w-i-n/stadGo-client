@@ -7,12 +7,12 @@ import { jwtPaylode } from "../../domain/modals/jwtDecode";
 import { useDispatch } from "react-redux";
 import { userLogged } from "../../Redux/user/userSlice";
 
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  GoogleCredentialResponse,
-} from "@react-oauth/google";
-import jwt_Decode from "jwt-decode";
+// import {
+//   GoogleOAuthProvider,
+//   GoogleLogin,
+//   GoogleCredentialResponse,
+// } from "@react-oauth/google";
+// import jwt_Decode from "jwt-decode";
 // import auth from "../../servises/api/auth";
 
 const genarateError = (err: any) =>
@@ -38,38 +38,38 @@ const UserLogin: React.FC = () => {
     }
   }, []);
 
-  const googleLogin = async (credentialResponse: GoogleCredentialResponse) => {
-    const { credential } = credentialResponse as GoogleCredentialResponse;
-    if (credential) {
-      try {
-        const decode: jwtPaylode = jwt_Decode(credential);
-        console.log(decode);
-        const Guser = {
-          firstname: decode.name,
-          lastname: decode.name.split("")[0],
-          username: decode.name.split("@")[0],
-          email: decode.email,
-          phone: decode.exp.toString(),
-          password: decode.email.split("@")[0],
-          isGoogle: true,
-        };
-        const { data } = await api.post("/userRegister", {
-          ...Guser,
-          isGoogle: true,
-        });
-        if (data) {
-          const Glogincheck = data.Guser;
-          localStorage.setItem("user", JSON.stringify(Glogincheck));
-          navigate("/userHome");
-        } else {
-        }
-      } catch (error) {
-        console.error("Token not found");
-      }
-    } else {
-      console.log(credentialResponse);
-    }
-  };
+  // const googleLogin = async (credentialResponse: GoogleCredentialResponse) => {
+  //   const { credential } = credentialResponse as GoogleCredentialResponse;
+  //   if (credential) {
+  //     try {
+  //       const decode: jwtPaylode = jwt_Decode(credential);
+  //       console.log(decode);
+  //       const Guser = {
+  //         firstname: decode.name,
+  //         lastname: decode.name.split("")[0],
+  //         username: decode.name.split("@")[0],
+  //         email: decode.email,
+  //         phone: decode.exp.toString(),
+  //         password: decode.email.split("@")[0],
+  //         isGoogle: true,
+  //       };
+  //       const { data } = await api.post("/userRegister", {
+  //         ...Guser,
+  //         isGoogle: true,
+  //       });
+  //       if (data) {
+  //         const Glogincheck = data.Guser;
+  //         localStorage.setItem("user", JSON.stringify(Glogincheck));
+  //         navigate("/userHome");
+  //       } else {
+  //       }
+  //     } catch (error) {
+  //       console.error("Token not found");
+  //     }
+  //   } else {
+  //     console.log(credentialResponse);
+  //   }
+  // };
 
   const handleLoginUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     {

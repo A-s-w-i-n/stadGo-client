@@ -28,6 +28,7 @@ import Paypal from './components/payment/ownerPremium';
 import Chat from './components/Chat/Chat';
 import Loader from './components/loader/loader';
 import SportsNews from './pages/userPage/sportsNews';
+import OwnerDashBoard from './components/owner/ownerDashBoard';
 function App() {
   
 
@@ -59,6 +60,7 @@ function App() {
         <Route path='/owner/Chat' element={<Chat role={'owner'}></Chat>}/>
         <Route path='/loading'element={<Loader/>} />
         <Route path='/news' element={<SportsNews/>}/>
+        <Route path='/owner/ownerDashBoard' element={<OwnerDashBoard/>}/>
       </Routes>
     </Router>
     </>

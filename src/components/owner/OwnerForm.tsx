@@ -23,6 +23,8 @@ const OwnerForm: React.FC = () => {
   const addOwner = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOwner({ ...owner, [e.target.name]: e.target.value });
   };
+  console.log(resendDisabled);
+  
 
   const handleOwnerSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,10 +53,12 @@ const OwnerForm: React.FC = () => {
         companyname !== " " &&
         location !== " "
       ) {
-        const { data } = await apiAuth.post("/owner/ownerRegister", {
+         await apiAuth.post("/owner/ownerRegister", {
           ...owner,
+          
         });
- 
+        
+        
         handleOwnerOtp();
       }
     } catch (error) {}
@@ -63,7 +67,7 @@ const OwnerForm: React.FC = () => {
   const handleOwnerOtp = async () => {
     try {
       setUserOtp(true);
-      const { data } = await apiAuth.post("/otp", { ...owner });
+       await apiAuth.post("/otp", { ...owner });
     } catch (error) {
       console.log(error);
     }
@@ -81,14 +85,14 @@ const OwnerForm: React.FC = () => {
       clearTimeout(timeout);
     };
   },[userOtp, otpTimer])
-  const handleResendOtp = () => {
-    setOtpTimer(60); // Reset the timer
-    setResendDisabled(true); 
-    handleOwnerOtp()
-  };
+  // const handleResendOtp = () => {
+  //   setOtpTimer(60); // Reset the timer
+  //   setResendDisabled(true); 
+  //   handleOwnerOtp()
+  // };
 
-  const verifyOtp = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const verifyOtp = async () => {
+    // e.preventDefault();
     const email = owner.email;
     const otp = inputOtp;
 
@@ -216,7 +220,7 @@ const OwnerForm: React.FC = () => {
               <button
                 className="bg-cyan-300 px-3 mt-3 py-2 rounded-lg just "
                 onClick={verifyOtp}
-                disabled ={otpTimer >0}
+                // disabled ={otpTimer >0}
               >
                 Submit
               </button>

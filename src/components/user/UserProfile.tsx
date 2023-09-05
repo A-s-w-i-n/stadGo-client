@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import UserNav from "../navbar/userNav";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import api from "../../servises/api/axios interceptor ";
 import { OrgDetail } from "../../domain/modals/organization";
 import axios from "axios";
 import { GrDocumentUpdate } from "react-icons/gr";
+import Loader from "../loader/loader";
 
 const UserProfile = () => {
   const [datas, setData] = useState<OrgDetail | null>(null);
@@ -11,9 +12,13 @@ const UserProfile = () => {
   const [url, setUrl] = useState("");
   const [image, setImage] = useState("");
   const fileInputRef: any = useRef(null);
+  const [loding,setLoding] = useState<boolean>(false)
   const user = JSON.parse(localStorage.getItem("user") as string);
   const check = user.LoginCheck;
   const email = user.LoginCheck.email;
+
+  console.log(SetRentalDetails);
+  
 
   const userIdFind = JSON.parse(localStorage.getItem("user") as string);
   console.log(userIdFind.LoginCheck._id);
@@ -27,64 +32,62 @@ const UserProfile = () => {
   };
   const handleProfileImageChange = async (
     e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (e.target.files) {
+    ) => {
+      if (e.target.files) {
       const formData = new FormData();
       const imageUrl = [];
       const files = e.target.files;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
+       
         formData.append("file", file);
         formData.append("uplode_preset", "stadGOimage");
         try {
+          setLoding(true)
           const result = await axios.post(
             "https://api.cloudinary.com/v1_1/dkuqvuhss/image/upload?upload_preset=stadGOimage",
             formData
-          );
+            );
           console.log(result.data.secure_url);
           imageUrl.push(result.data.secure_url);
           setUrl(result.data.secure_url);
-         
           updateProfile()
+          setLoding(false)
         } catch (error) {
           console.log(error);
         }
       }
     }
   };
+  const updateProfile = async () => {
+    if(url){
+      
+      const  data  = await api.post("/userProfileImage", { id, url });
+      setLoding(true)
+
+      if(data){
+        
+        setImage(data.data.uplodeImg.profileImg);
+        fetchProfile()
+      }
+      setLoding(false)
+      console.log(data.data.uplodeImg.profileImg);
+      console.log(data,"lllll");
+    }
+  };
   const handleSvgClick = () => {
     fileInputRef.current.click();
   };
-  const updateProfile = async () => {
-    if(url){
-console.log(url,"comm");
+  console.log(url);
+  console.log(id);
 
-      const { data } = await apiAuth.post("/userProfileImage", { id, url });
-      console.log(data.uplodeImg);
-      // handleSvgClick();
-      setImage(data.uplodeImg);
-      fetchProfile()
-      console.log(data.uplodeImg,"lllll");
-    }
-  };
-
-  const fetchProfile = () =>{
-    apiAuth.post("/fetchProfileImg",{id}).then((result)=>{
-      setImage(result.data.findImg.profileImg)
-      
-      console.log(result.data.findImg.profileImg,"image");
-  
-      
-      
-  
-  
-    })
-   
+  const fetchProfile =async () =>{
+   const data = await api.post("/fetchProfileImg",{id})
+      setImage(data.data.findImg.profileImg)
+      console.log(data.data.findImg.profileImg,"image");
     
   }
   
-
-
   useEffect(() => {
 
     fetchProfile()
@@ -92,6 +95,7 @@ console.log(url,"comm");
   }, []);
   return (
     <div>
+      {loding && <Loader/>}
       <UserNav />
       <div className="bg-white  w-full h-screen  flex   ">
         <div
@@ -126,7 +130,7 @@ console.log(url,"comm");
             <div className="relative mt-1 h-[540px] flex w-100  flex-col jus rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
               <div className=" flex relative ml-24  mx-4 mt-6 h-56 w-72 items-center justify-center overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40">
                 <img
-                  src={image }
+                  src={image}
                   alt="img-blur-shadow"
                   className="h-56 w-72"
                 />

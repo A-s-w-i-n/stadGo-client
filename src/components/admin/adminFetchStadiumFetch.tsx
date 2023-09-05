@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 import AdminHome from "./adminHome";
 import { stadim } from "../../domain/modals/stadium";
 
@@ -32,10 +32,10 @@ const AdminFetchStadium: React.FC = () => {
   return (
     <div>
       <AdminHome />
-      <div className="flex flex-row w-screen ">
+      <div className="flex flex-row w-full bg-red-400 ">
         <form action="">
-          <div className="p-6  w-full">
-            <div className="w-full ml-72 ">
+         
+            <div className="w-[66rem] sm:w-[50rem] xl:w-[66rem] lg:w-[58rem] md:w-[40rem] ml-72 ">
               <table className="table-auto w-full border-collapse ">
                 <thead>
                   <tr>
@@ -61,7 +61,7 @@ const AdminFetchStadium: React.FC = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          
         </form>
       </div>
 

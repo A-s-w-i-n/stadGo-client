@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MainPagenav from "../navbar/mainPagenav";
 import { OrgDetail } from "../../domain/modals/organization";
 import api from "../../servises/api/axios interceptor ";
-import { json, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const OrgDetails: React.FC = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const OrgDetails: React.FC = () => {
       ) {
         const emailId = JSON.parse(localStorage.getItem("user") as string);
         const email = emailId.LoginCheck.email;
-        const userId = emailId.LoginCheck._id;
+        // const userId = emailId.LoginCheck._id;
         console.log(emailId.LoginCheck.email);
         const { data } = await api.post("/org/orgDetails", {
           ...orgDetail,

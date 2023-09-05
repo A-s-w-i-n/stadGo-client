@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userAuth } from "../../domain/modals/user";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
-import jwt_Decode from "jwt-decode";
-import { jwtPaylode } from "../../domain/modals/jwtDecode";
-import {
-  GoogleOAuthProvider,
-  GoogleLogin,
-  GoogleCredentialResponse,
-} from "@react-oauth/google";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
+// import jwt_Decode from "jwt-decode";
+// import { jwtPaylode } from "../../domain/modals/jwtDecode";
+// import {
+//   GoogleOAuthProvider,
+//   GoogleLogin,
+//   GoogleCredentialResponse,
+// } from "@react-oauth/google";
 
 const userForm: React.FC = () => {
   const navigate = useNavigate();
@@ -38,42 +38,42 @@ const userForm: React.FC = () => {
 
   // google auth
 
-  const googleSignup = async (credentialResponse: GoogleCredentialResponse) => {
-    const { credential } = credentialResponse as GoogleCredentialResponse;
-    if (credential) {
-      try {
-        const decode: jwtPaylode = jwt_Decode(credential);
-        const Guser = {
-          firstname: decode.name,
-          lastname: decode.name.split("")[0],
-          username: decode.name.split("@")[0],
-          email: decode.email,
-          phone: decode.exp.toString(),
-          password: decode.email.split("@")[0],
-          isGoogle: true,
-        };
-        const { data } = await api.post("/userRegister", {
-          ...Guser,
-          isGoogle: true,
-        });
+  // const googleSignup = async (credentialResponse: GoogleCredentialResponse) => {
+  //   const { credential } = credentialResponse as GoogleCredentialResponse;
+  //   if (credential) {
+  //     try {
+  //       const decode: jwtPaylode = jwt_Decode(credential);
+  //       const Guser = {
+  //         firstname: decode.name,
+  //         lastname: decode.name.split("")[0],
+  //         username: decode.name.split("@")[0],
+  //         email: decode.email,
+  //         phone: decode.exp.toString(),
+  //         password: decode.email.split("@")[0],
+  //         isGoogle: true,
+  //       };
+  //       const { data } = await api.post("/userRegister", {
+  //         ...Guser,
+  //         isGoogle: true,
+  //       });
 
-        if (data) {
-          const GsignCheck = data.Guser.email;
-          const GaccessToken = data.Guser.username;
+  //       if (data) {
+  //         const GsignCheck = data.Guser.email;
+  //         const GaccessToken = data.Guser.username;
 
-          localStorage.setItem(
-            "user",
-            JSON.stringify(GaccessToken, GsignCheck)
-          );
-          navigate("/userhome");
-        }
-      } catch (error) {
-        console.error("Token not found");
-      }
-    } else {
-      console.log(credentialResponse);
-    }
-  };
+  //         localStorage.setItem(
+  //           "user",
+  //           JSON.stringify(GaccessToken, GsignCheck)
+  //         );
+  //         navigate("/userhome");
+  //       }
+  //     } catch (error) {
+  //       console.error("Token not found");
+  //     }
+  //   } else {
+  //     console.log(credentialResponse);
+  //   }
+  // };
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
@@ -112,7 +112,7 @@ const userForm: React.FC = () => {
         console.log("its workinnnnnng");
         console.log(user);
 
-        const { data } = await apiAuth.post("/userRegister", { ...user });
+         await apiAuth.post("/userRegister", { ...user });
         handleUserOtp();
       }
     } catch (error) {}
@@ -121,7 +121,7 @@ const userForm: React.FC = () => {
   const handleUserOtp = async () => {
     try {
       setUserOtp(true);
-      const { data } = await apiAuth.post("/otp", { ...user });
+       await apiAuth.post("/otp", { ...user });
     } catch (error) {
       console.log(error);
     }

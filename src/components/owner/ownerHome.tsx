@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import MainPagenav from "../navbar/mainPagenav";
 import { useNavigate } from "react-router-dom";
 import api, { apiAuth } from "../../servises/api/axios interceptor ";
-import { stadim } from "../../domain/modals/stadium";
-import { ToastContainer, toast } from "react-toastify";
+// import { stadim } from "../../domain/modals/stadium";
+// import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Paypal from "../payment/ownerPremium";
-import { ownerData } from "../../domain/modals/ownerData";
+// import Paypal from "../payment/ownerPremium";
+// import { ownerData } from "../../domain/modals/ownerData";
 
 const OwnerHome = () => {
   const navigate = useNavigate();
-  const [OwnerPrimuim, setOnwerPrimium] = useState(false);
+  // const [OwnerPrimuim, setOnwerPrimium] = useState(false);
 
-  const [detailsCheck, setDetailsCheck] = useState<ownerData>();
+  // const [detailsCheck, setDetailsCheck] = useState<ownerData>();
   const userEmail = JSON.parse(localStorage.getItem("owner") as string);
   const emailId = userEmail.OwnerLoginCheck;
   const email = emailId.email;
@@ -20,15 +20,15 @@ const OwnerHome = () => {
 
  
 
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  // const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
-  const openPaymentModal = () => {
-    setIsPaymentModalOpen(true);
-  };
+  // const openPaymentModal = () => {
+  //   setIsPaymentModalOpen(true);
+  // };
 
-  const closePaymentModal = () => {
-    setIsPaymentModalOpen(false);
-  };
+  // const closePaymentModal = () => {
+  //   setIsPaymentModalOpen(false);
+  // };
 
   const handleFetchDetail = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ const OwnerHome = () => {
     apiAuth
       .post("/owner/fetchOwner", { email })
       .then((fetchData) => {
-        setDetailsCheck(fetchData.data.ownerDetail.premium);
+        // setDetailsCheck(fetchData.data.ownerDetail.premium);
         console.log(fetchData.data, "fetch");
       })
       .catch(() => {});

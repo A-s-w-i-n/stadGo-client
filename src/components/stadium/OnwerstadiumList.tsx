@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import OwnerNav from "../navbar/ownerNav";
 import { stadim } from "../../domain/modals/stadium";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import api from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineMenu } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { ownerLogged } from "../../Redux/owner/ownerSlice";
-import Loader from "../loader/loader";
+// import { AiOutlineMenu } from "react-icons/ai";
+// import { useDispatch } from "react-redux";
+// import { ownerLogged } from "../../Redux/owner/ownerSlice";
+// import Loader from "../loader/loader";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
 
 const OnwerstadiumList = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [stadiumData, setStadiumData] = useState<stadim[]>([]);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-  const [loding,setLoding] = useState<boolean>(true)
+  // const [loding,setLoding] = useState<boolean>(true)
   const navigate = useNavigate();
   const [stadiumname,setEditStadiumName] = useState("")
   const [sportstype,setSportsType] = useState("")
   const [fromdate,setFromdate] = useState("")
   const [todate,setToDate] = useState("")
   const [price,setPrice] = useState("")
-  const [image,setImage] = useState([""])
+  // const [image,setImage] = useState([""])
   const [discription,setDiscription] =useState("")
   const [id,setId] = useState("")
 
-  const [selectedMainImages, setSelectedMainImages] = useState<{
-    [stadiumId: string]: string;
-  }>(
-    {} 
-  );
+  // const [selectedMainImages, setSelectedMainImages] = useState<{
+  //   [stadiumId: string]: string;
+  // }>(
+  //   {} 
+  // );
   const handleModalOpen = () => {
     setIsPaymentModalOpen(true);
   };
@@ -88,7 +88,7 @@ const OnwerstadiumList = () => {
   }, []);
 const updateStadiumList =async () =>{
  
-  const data =await api.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
+  await api.post('/stadium/editStadium',{id,stadiumname,sportstype,fromdate,todate,price,discription})
   fetchData()
   handleModalClose()
 }
@@ -99,16 +99,16 @@ const updateStadiumList =async () =>{
     navigate("/owner/stadiumlist");
   }
 
-  const handleMainImageClick = (stadiumId: string, imageUrl: string) => {
-    setSelectedMainImages((prevImages) => ({
-      ...prevImages,
-      [stadiumId]: imageUrl,
-    }));
-  };
+  // const handleMainImageClick = (stadiumId: string, imageUrl: string) => {
+  //   setSelectedMainImages((prevImages) => ({
+  //     ...prevImages,
+  //     [stadiumId]: imageUrl,
+  //   }));
+  // };
 
   return (
     <div>
-      {loding&&<Loader/>}
+      {/* {loding&&<Loader/>} */}
       <OwnerNav />
 
       {stadiumData.map((item) => (

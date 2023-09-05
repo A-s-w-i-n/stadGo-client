@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import OwnerNav from "../navbar/ownerNav";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import api from "../../servises/api/axios interceptor ";
 import { stadim } from "../../domain/modals/stadium";
 import { CgProfile } from "react-icons/cg";
 
@@ -10,6 +10,8 @@ const OwnerProfile = () => {
   const [incomeDetails,setIncomeDetails] = useState(true)
   const owner = JSON.parse(localStorage.getItem("owner") as string);
   console.log(owner);
+  console.log(setIncomeDetails);
+  
 
   const check = owner.OwnerLoginCheck;
   const email = check.email;
@@ -22,7 +24,7 @@ const OwnerProfile = () => {
     setIsModalOpen(false)
   }
   const handleFetchStadium = async () => {
-    const { data } = await apiAuth.post("/stadium/fetchStadium", { email });
+    const { data } = await api.post("/stadium/fetchStadium", { email });
     setStadiumDetail(data.fetchStadiumData[0]);
     console.log(data.fetchStadiumData, "aaa");
   };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 import AdminHome from "./adminHome";
 import { ownerData } from "../../domain/modals/ownerData";
 
