@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "homepage": "https://stad-go-client.vercel.app",
+ 
   "dependencies": {
     "@auth0/auth0-react": "^2.2.0",
     "@cloudinary/react": "^1.11.2",
