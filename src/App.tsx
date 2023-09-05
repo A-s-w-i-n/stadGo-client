@@ -24,7 +24,7 @@ import OnwerstadiumList from './components/stadium/OnwerstadiumList';
 import UserProtectedRouter from './pages/ProtectRouter/UserProtectRouter';
 import OwnerProtectRouter from './pages/ProtectRouter/ownerProtectRouter';
 import UserSatdiumList from './components/stadium/userSatdiumList';
-import Paypal from './components/payment/ownerPremium';
+// import Paypal from './components/payment/ownerPremium';
 import Chat from './components/Chat/Chat';
 import Loader from './components/loader/loader';
 import SportsNews from './pages/userPage/sportsNews';
@@ -51,7 +51,7 @@ function App() {
         <Route path='/stadiumDetails' element={<OwnerProtectRouter><Stadium/></OwnerProtectRouter>}/>
         <Route path='/owner/stadiumlist' element={<OwnerProtectRouter><OnwerstadiumList/></OwnerProtectRouter>}/>
         <Route path='/stadiumList' element={<UserProtectedRouter><UserSatdiumList/></UserProtectedRouter>}/>
-        <Route path='/owner/premium' element={<OwnerProtectRouter><Paypal/></OwnerProtectRouter>}/>
+        {/* <Route path='/owner/premium' element={<OwnerProtectRouter><Paypal/></OwnerProtectRouter>}/> */}
         <Route path='/userProfile' element={<UserProtectedRouter><UserProfile/></UserProtectedRouter>}/>
         <Route path='/detailedView/:id' element={<DetaildView/>}/>
         <Route path='/owner/ownerProfile' element={<OwnerProtectRouter><OwnerProfile/></OwnerProtectRouter>}/>
