@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ownerAuth } from "../../domain/modals/owner";
 import { useNavigate } from "react-router-dom";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 
 const OwnerForm: React.FC = () => {
   const navigate = useNavigate();
@@ -19,6 +19,8 @@ const OwnerForm: React.FC = () => {
     password: "",
     location: "",
   });
+  console.log(setResendDisabled);
+  
 
   const addOwner = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOwner({ ...owner, [e.target.name]: e.target.value });

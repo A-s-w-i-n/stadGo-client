@@ -1,9 +1,9 @@
-import React, {  useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 // import UserPremium from "../payment/userPremium";
 import api from "../../servises/api/axios interceptor ";
-import { userData } from "../../domain/modals/userData";
+// import { userData } from "../../domain/modals/userData";
 import MainPagenav from "../navbar/mainPagenav";
 
 const UserHome: React.FC = () => {

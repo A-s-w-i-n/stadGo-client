@@ -1,7 +1,7 @@
 import axios from 'axios'
 import  {  useState } from 'react'
 import UserNav from '../../components/navbar/userNav';
-import  { apiAuth } from '../../servises/api/axios interceptor ';
+// import  { apiAuth } from '../../servises/api/axios interceptor ';
 
 const SportsNews = () => {
 

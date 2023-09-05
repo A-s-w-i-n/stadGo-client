@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import OwnerNav from "../navbar/ownerNav";
 import {PiUsersThree} from 'react-icons/pi'
 import {MdOutlineStadium} from 'react-icons/md'

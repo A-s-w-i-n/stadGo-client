@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import api, { apiAuth } from "../../servises/api/axios interceptor ";
+import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { jwtPaylode } from "../../domain/modals/jwtDecode";
+// import { jwtPaylode } from "../../domain/modals/jwtDecode";
 import { useDispatch } from "react-redux";
 import { userLogged } from "../../Redux/user/userSlice";
 

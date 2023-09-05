@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import UserNav from "../navbar/userNav";
 import io from "socket.io-client";
 import { AiOutlineSend } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import  { apiAuth } from "../../servises/api/axios interceptor ";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Chats, message } from "../../domain/modals/chat";
