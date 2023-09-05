@@ -5,7 +5,7 @@ import UserNav from "../navbar/userNav";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Slider from "react-slick";
-import {GoogleMap,Marker} from '@react-google-maps/api'
+// import {GoogleMap,Marker} from '@react-google-maps/api'
 
 
 import { stadim } from "../../domain/modals/stadium";
@@ -32,14 +32,14 @@ const DetaildView: React.FC = () => {
     autoplay: true,
     autoplaySpeed: 2000,
   };
-  const mapStyles = {
-    height: '400px',
-    width: '100%',
-  };
-  const defaultCenter = {
-     lat: 22.8061, 
-    lng: 86.1931,
-  };
+  // const mapStyles = {
+  //   height: '400px',
+  //   width: '100%',
+  // };
+  // const defaultCenter = {
+  //    lat: 22.8061, 
+  //   lng: 86.1931,
+  // };
   const [carosal, setCarosal] = useState<stadim>();
   // const [firstChat, setFirstChat] = useState(true);
   const { id } = useParams();
@@ -220,13 +220,13 @@ const DetaildView: React.FC = () => {
 
      
       <div className="mt-6">
-      <GoogleMap
+      {/* <GoogleMap
         mapContainerStyle={mapStyles}
         zoom={15}   
         center={defaultCenter}
       >
        <Marker position={defaultCenter} />
-      </GoogleMap>
+      </GoogleMap> */}
       </div>
      
     </div>

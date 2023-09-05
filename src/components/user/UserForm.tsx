@@ -193,7 +193,7 @@ const userForm: React.FC = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-6 ml-48 ">
                   <div className="flex flex-col items-center justify-center">
-                    <button className="rounded-3xl bg-cyan-300 px-3 py-2  transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 duration-300">
+                    <button className="rounded-3xl px-3 py-2  transition ease-in-out delay-150 bg-cyan-300 hover:-translate-y-1 hover:scale-110 hover:bg-cyan-300 duration-300">
                       REGISTER
                     </button>
                     <h3 className="text-center my-2 ">or</h3>
